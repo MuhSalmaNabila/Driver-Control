@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Login extends Activity implements View.OnClickListener {
+
+    //cek
     Button bLogin;
     EditText etUsername, etPassword;
     TextView tRegister;
