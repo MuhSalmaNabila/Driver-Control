@@ -15,16 +15,18 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
+/*
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+*/
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Login extends Activity implements View.OnClickListener {
+public class Login extends Activity {
 
+    /*
     //cek
     Button bLogin;
     EditText etUsername, etPassword;
@@ -37,8 +39,8 @@ public class Login extends Activity implements View.OnClickListener {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
-
+    //private GoogleApiClient client;
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,4 +144,5 @@ public class Login extends Activity implements View.OnClickListener {
 
         }
     }
+    */
 }
