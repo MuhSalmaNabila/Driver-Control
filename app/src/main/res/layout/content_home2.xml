@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:showIn="@layout/activity_home2" tools:context="com.ditrol.tugasakhir.HomeActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Driver Control"
+        android:textColor="#000000"
+        android:textSize="35sp"
+        android:id="@+id/tJudulhome"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivlogo"
+        android:src="@drawable/motor"
+        android:layout_below="@+id/tJudulhome"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibMaps"
+        android:src="@drawable/maps"
+        android:background="#ebc076"
+        android:layout_above="@+id/tlogomaps"
+        android:layout_toStartOf="@+id/ivlogo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Maps"
+        android:id="@+id/tlogomaps"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/ibMaps" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibSpeed"
+        android:src="@drawable/speed"
+        android:background="#ebc076"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/tlogomaps"
+        android:layout_alignEnd="@+id/tlogomaps" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Speed"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:id="@+id/tlogospeed"
+        android:layout_below="@+id/ibSpeed"
+        android:layout_alignStart="@+id/tlogomaps" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibLock"
+        android:src="@drawable/lock"
+        android:background="#ebc076"
+        android:layout_alignTop="@+id/ibMaps"
+        android:layout_toEndOf="@+id/ivlogo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Lock"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:id="@+id/tLock"
+        android:layout_above="@+id/ibSpeed"
+        android:layout_alignEnd="@+id/ibLock" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibprofil"
+        android:src="@drawable/profil"
+        android:background="#ebc076"
+        android:layout_above="@+id/tlogospeed"
+        android:layout_alignEnd="@+id/tLock" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Profile"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:id="@+id/tProfil"
+        android:layout_below="@+id/ibprofil"
+        android:layout_alignStart="@+id/ibprofil" />
+
+
+</RelativeLayout>

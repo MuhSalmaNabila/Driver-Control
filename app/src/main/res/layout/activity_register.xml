@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebc076">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrasi"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:id="@+id/tRegistrasi"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Lengkap"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:id="@+id/tNamalengkap"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/tRegistrasi"
+        android:layout_alignEnd="@+id/tRegistrasi" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etNamalengkap"
+        android:ems="10"
+        android:layout_below="@+id/tNamalengkap"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:id="@+id/tPasswordreg"
+        android:layout_below="@+id/etNamalengkap"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/etPasswordreg"
+        android:layout_below="@+id/tPasswordreg"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nomor Plat Motor"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:id="@+id/tPlatmotor"
+        android:layout_below="@+id/etPasswordreg"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/etPlatmotor"
+        android:layout_below="@+id/tPlatmotor"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:id="@+id/tEmail"
+        android:layout_below="@+id/etPlatmotor"
+        android:layout_alignStart="@+id/tNamalengkap" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/etEmail"
+        android:layout_below="@+id/tEmail"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nomor Handphone"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:id="@+id/tNohp"
+        android:layout_below="@+id/etEmail"
+        android:layout_alignStart="@+id/tEmail" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/etNohp"
+        android:layout_below="@+id/tNohp"
+        android:layout_alignStart="@+id/tNohp"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daftar"
+        android:id="@+id/bDaftar"
+        android:layout_below="@+id/etNohp"
+        android:layout_alignStart="@+id/etNohp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sudah punya akun? Login disini"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:id="@+id/tLogin"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
