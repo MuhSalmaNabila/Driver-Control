@@ -54,7 +54,11 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/profile" />
+            android:label="@string/profile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".unused.Login"
             android:label="@string/title_activity_home2"

@@ -449,15 +449,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
 
-            int numDays = 7;
+            int idUser = 7;
 
             try {
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are avaiable at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
-                final String CHOLOC_BASE_URL = "http://luxarcadia.com/ditrol/read_user.php";
+                // Construct the URL for the login query
+                final String BASE_URL =
+                        "http://luxarcadia.com/ditrol/read_user.php";
+                String NUM_PARAM = "id";
 
-                Uri builtUri = Uri.parse(CHOLOC_BASE_URL);
+                Uri builtUriLogin = Uri.parse(BASE_URL).buildUpon()
+                        .appendQueryParameter(NUM_PARAM, Integer.toString(idUser))
+                        .build();
+
+                URL urlLogin = new URL(builtUriLogin.toString());
+
+                Log.v(LOG_TAG, "Built URI Login " + urlLogin);
+
+
+                final String DITROL_BASE_URL = "http://luxarcadia.com/ditrol/read_user.php";
+
+                Uri builtUri = Uri.parse(DITROL_BASE_URL);
 
                 Log.v(LOG_TAG, "URI: " + builtUri.toString());
 
