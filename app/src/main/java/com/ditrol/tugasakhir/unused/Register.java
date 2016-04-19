@@ -1,12 +1,13 @@
-package com.ditrol.tugasakhir;
+package com.ditrol.tugasakhir.unused;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Register extends Activity implements View.OnClickListener {
+import com.ditrol.tugasakhir.R;
+
+public class Register extends Activity {
     Button bDaftar;
     EditText etNamalengkap,etPasswordreg, etPlatmotor, etEmail, etNohp;
 
@@ -14,7 +15,7 @@ public class Register extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        /*
         etNamalengkap = (EditText) findViewById(R.id.etNamalengkap);
         etPasswordreg = (EditText) findViewById(R.id.etPasswordreg);
         etPlatmotor = (EditText) findViewById(R.id.etPlatmotor);
@@ -32,6 +33,7 @@ public class Register extends Activity implements View.OnClickListener {
 
                        break;
         }
+        */
     }
 
 }
