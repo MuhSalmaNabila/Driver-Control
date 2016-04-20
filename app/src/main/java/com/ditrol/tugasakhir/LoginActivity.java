@@ -3,22 +3,20 @@ package com.ditrol.tugasakhir;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -56,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public ArrayAdapter<String> mForecastAdapter;
     String[] resultStrs = new String[1000];
+    String resultStrs2 = null;
     boolean passwordDb = false;
     boolean emailDb = false;
     String id_user;
@@ -238,8 +237,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            UserLoginTask weatherTask = new UserLoginTask(email,password);
-            weatherTask.execute("");
+            //UserLoginTask weatherTask = new UserLoginTask(email,password);
+            //weatherTask.execute("");
+            LoginTask loginTask = new LoginTask(email,password);
+            loginTask.execute("");
             showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
@@ -348,8 +349,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Represents an asynchronous registration task used to store
+     * the user data.
      */
 
     public class UserLoginTask extends AsyncTask<String, Void, String[]> {
@@ -406,11 +407,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 db_plat_motor = userData.getString(PLAT_MOTOR);
                 db_email = userData.getString(EMAIL).toLowerCase();
 
-                if (db_email.equals(mEmail.toLowerCase())){
-                    emailDb = true;
+                if (emailDb){
                     Log.v(LOG_TAG,"Email ada di Db: " + db_email);
-                    if (db_password.equals(mPassword)){
-                        passwordDb = true;
+                    if (passwordDb){
                         Log.v(LOG_TAG,"Password ada di Db: " + db_password);
                         id_user = db_id_user;
                         username = db_username;
@@ -450,27 +449,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String forecastJsonStr = null;
 
             int idUser = 7;
+            String emailUser = mEmail;
+            String passwordUser = mPassword;
 
             try {
                 // Construct the URL for the login query
                 final String BASE_URL =
                         "http://luxarcadia.com/ditrol/read_user.php";
-                String NUM_PARAM = "id";
+                String EMAIL_PARAM = "email";
+                String PASS_PARAM = "password";
 
                 Uri builtUriLogin = Uri.parse(BASE_URL).buildUpon()
-                        .appendQueryParameter(NUM_PARAM, Integer.toString(idUser))
+                        .appendQueryParameter(EMAIL_PARAM, emailUser)
+                        .appendQueryParameter(PASS_PARAM, passwordUser)
                         .build();
 
-                URL urlLogin = new URL(builtUriLogin.toString());
+                URL builtUri = new URL(builtUriLogin.toString());
 
-                Log.v(LOG_TAG, "Built URI Login " + urlLogin);
-
-
-                final String DITROL_BASE_URL = "http://luxarcadia.com/ditrol/read_user.php";
-
-                Uri builtUri = Uri.parse(DITROL_BASE_URL);
-
-                Log.v(LOG_TAG, "URI: " + builtUri.toString());
+                Log.v(LOG_TAG, "Built URI Login " + builtUri);
 
                 URL url = new URL(builtUri.toString());
 
@@ -536,18 +532,192 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (strings!=null) {
+                session.createLoginSession(id_user, username, password, plat_motor, email, no_hp);
+                Intent i = null;
+                i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            } else {
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
+    /**
+     * Represents an asynchronous login task used to authenticate
+     * the user.
+     */
+
+    public class LoginTask extends AsyncTask<String, Void, String> {
+
+        private final String LOG_TAG = LoginTask.class.getSimpleName();
+
+        private final String mEmail;
+        private final String mPassword;
+
+        LoginTask(String email, String password) {
+            mEmail = email;
+            mPassword = password;
+        }
+
+        /**
+         * Take the String representing the complete forecast in JSON Format and
+         * pull out the data we need to construct the Strings needed for the wireframes.
+         *
+         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
+         * into an Object hierarchy for us.
+         */
+        private String getWeatherDataFromJson(String userJsonStr)
+                throws JSONException {
+
+            // These are the names of the JSON objects that need to be extracted.
+            final String SUCCESS = "success";
+            final String MESSAGE = "message";
+
+            JSONObject jsonObject = new JSONObject(userJsonStr);
+            String success;
+            String message;
+
+            // Get the JSON object representing the day
+            JSONObject userData = jsonObject;
+
+            // description is in a child array called "weather", which is 1 element long.
+            success = userData.getString(SUCCESS);
+            message = userData.getString(MESSAGE);
+
+            if (success=="1"){
+                emailDb = true;
+                passwordDb = true;
+                String emailUser = mEmail;
+                String passwordUser = mPassword;
+                Log.v(LOG_TAG,"Email dan password valid. Login success. ");
+                UserLoginTask weatherTask = new UserLoginTask(emailUser, passwordUser);
+                weatherTask.execute("");
+            }else if(success=="2"){
+                emailDb = true;
+                Log.v(LOG_TAG,"Email ada di Db. Password salah. ");
+            }else if(success=="0"){
+                Log.v(LOG_TAG,"Email belum terdaftar. ");
+            }
+
+            // Temperatures are in a child object called "temp".  Try not to name variables
+            // "temp" when working with temperature.  It confuses everybody.
+            resultStrs2 = success + " - " + message;
+            Log.v(LOG_TAG, "Hasil: "  + resultStrs2);
+            return resultStrs2;
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+
+            // If there's no zip code, there's nothing to look up.  Verify size of params.
+            if (params.length == 0) {
+                return null;
+            }
+
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            // Will contain the raw JSON response as a string.
+            String forecastJsonStr = null;
+
+            String emailUser = mEmail;
+            String passwordUser = mPassword;
+
+            try {
+                // Construct the URL for the login query
+                final String BASE_URL =
+                        "http://luxarcadia.com/ditrol/login_task.php";
+                String EMAIL_PARAM = "email";
+                String PASS_PARAM = "password";
+
+                Uri builtUriLogin = Uri.parse(BASE_URL).buildUpon()
+                        .appendQueryParameter(EMAIL_PARAM, emailUser.toLowerCase())
+                        .appendQueryParameter(PASS_PARAM, passwordUser)
+                        .build();
+
+                URL urlLogin = new URL(builtUriLogin.toString());
+
+                Log.v(LOG_TAG, "Built URI Login " + urlLogin);
+
+                URL url = new URL(urlLogin.toString());
+
+                // Create the request to OpenWeatherMap, and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+                forecastJsonStr = buffer.toString();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attemping
+                // to parse it.
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            try {
+                return getWeatherDataFromJson(forecastJsonStr);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            }
+
+            // This will only happen if there was an error getting or parsing the forecast.
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String strings) {
+            mAuthTask = null;
+
+            if (strings!=null) {
                 if(emailDb){
                     if(passwordDb){
                         Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
-                        session.createLoginSession(id_user, username, email);
-
-                        Intent i = null;
-                        i = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
-
                     }else{
                         Toast.makeText(LoginActivity.this, "Password yang Anda masukkan salah! Silahkan ulangi kembali.", Toast.LENGTH_SHORT).show();
+                        mPasswordView.requestFocus();
                     }
                 }else {
                     Toast.makeText(LoginActivity.this, "Email yang anda masukkan belum terdaftar.", Toast.LENGTH_SHORT).show();

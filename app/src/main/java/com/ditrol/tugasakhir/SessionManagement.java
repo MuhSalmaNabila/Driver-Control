@@ -30,10 +30,19 @@ public class SessionManagement {
     public static final String KEY_ID = "id";
 
     // User name (make variable public to access from outside)
-    public static final String KEY_NAME = "name";
+    public static final String KEY_USERNAME = "username";
+
+    // Password (make variable public to access from outside)
+    public static final String KEY_PASSWORD = "password";
+
+    // Plat motor(make variable public to access from outside)
+    public static final String KEY_PLAT_MOTOR = "plat_motor";
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
+
+    // Nomor Hp (make variable public to access from outside)
+    public static final String KEY_NO_HP = "no_hp";
 
     // Constructor
     public SessionManagement(Context context){
@@ -42,21 +51,31 @@ public class SessionManagement {
         editor = pref.edit();
     }
 
+
     /**
      * Create login session
      * */
-    public void createLoginSession(String id, String name, String email){
+    public void createLoginSession(String id, String username, String password, String plat_motor, String email, String no_hp){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing user id in pref
         editor.putString(KEY_ID, id);
 
-        // Storing name in pref
-        editor.putString(KEY_NAME, name);
+        // Storing username in pref
+        editor.putString(KEY_USERNAME, username);
+
+        // Storing password in pref
+        editor.putString(KEY_PASSWORD, password);
+
+        // Storing plat motor in pref
+        editor.putString(KEY_PLAT_MOTOR, plat_motor);
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
+
+        // Storing nomer hp in pref
+        editor.putString(KEY_NO_HP, no_hp);
 
         // commit changes
         editor.commit();
@@ -95,10 +114,19 @@ public class SessionManagement {
         user.put(KEY_ID, pref.getString(KEY_ID, null));
 
         // user name
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
+        user.put(KEY_USERNAME, pref.getString(KEY_USERNAME, null));
 
-        // user email id
+        // user password
+        user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
+
+        // user plat motor
+        user.put(KEY_PLAT_MOTOR, pref.getString(KEY_PLAT_MOTOR, null));
+
+        // user email
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+
+        // user nomor hp
+        user.put(KEY_NO_HP, pref.getString(KEY_NO_HP, null));
 
         // return user
         return user;

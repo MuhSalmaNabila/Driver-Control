@@ -27,12 +27,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton button = (ImageButton)findViewById(R.id.ibprofil);
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonProfile = (ImageButton)findViewById(R.id.ibprofil);
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = null;
                 i = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ImageButton buttonMaps = (ImageButton)findViewById(R.id.ibMaps);
+        buttonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = null;
+                i = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ImageButton buttonLock = (ImageButton)findViewById(R.id.ibLock);
+        buttonLock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = null;
+                i = new Intent(MainActivity.this, LockActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ImageButton buttonSpeed = (ImageButton)findViewById(R.id.ibSpeed);
+        buttonSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = null;
+                i = new Intent(MainActivity.this, SpeedActivity.class);
                 startActivity(i);
             }
         });
