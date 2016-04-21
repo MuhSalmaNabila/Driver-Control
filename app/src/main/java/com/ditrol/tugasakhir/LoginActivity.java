@@ -589,10 +589,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JSONObject userData = jsonObject;
 
             // description is in a child array called "weather", which is 1 element long.
+
             success = userData.getString(SUCCESS);
             message = userData.getString(MESSAGE);
+            Log.v(LOG_TAG,"success:" + success + "- message:" + message);
 
-            if (success=="1"){
+            if (success.equalsIgnoreCase("1")){
                 emailDb = true;
                 passwordDb = true;
                 String emailUser = mEmail;
@@ -600,10 +602,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.v(LOG_TAG,"Email dan password valid. Login success. ");
                 UserLoginTask weatherTask = new UserLoginTask(emailUser, passwordUser);
                 weatherTask.execute("");
-            }else if(success=="2"){
+            }else if(success.equalsIgnoreCase("2")){
                 emailDb = true;
                 Log.v(LOG_TAG,"Email ada di Db. Password salah. ");
-            }else if(success=="0"){
+            }else if(success.equalsIgnoreCase("0")){
                 Log.v(LOG_TAG,"Email belum terdaftar. ");
             }
 
@@ -710,6 +712,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(String strings) {
             mAuthTask = null;
+            showProgress(false);
 
             if (strings!=null) {
                 if(emailDb){
