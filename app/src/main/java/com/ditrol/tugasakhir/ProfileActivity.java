@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.net.PasswordAuthentication;
 import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -34,6 +35,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         EditText etUsername = (EditText)findViewById(R.id.etusername);
         etUsername.setText(userName);
+
+        EditText etPassword = (EditText)findViewById(R.id.etPassword);
+        etPassword.setText(userPassword);
 
         EditText etPlatMotor = (EditText)findViewById(R.id.etplat);
         etPlatMotor.setText(userPlatMotor);
