@@ -93,11 +93,17 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if(id == R.id.action_howtouse){
-            return true;
+            Intent i = null;
+            i = new Intent(MainActivity.this, HowtouseActivity.class);
+            startActivity(i);
         }else if(id == R.id.action_record){
-            return true;
+            Intent i = null;
+            i = new Intent(MainActivity.this, RecordActivity.class);
+            startActivity(i);
         }else if(id == R.id.action_about){
-            return true;
+            Intent i = null;
+            i = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(i);
         }else if(id == R.id.action_logout){
             session.logoutUser();
             return true;

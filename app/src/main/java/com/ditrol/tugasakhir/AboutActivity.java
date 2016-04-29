@@ -1,7 +1,8 @@
 package com.ditrol.tugasakhir;
 
-import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 /**
  * Created by NB on 28-Apr-16.
