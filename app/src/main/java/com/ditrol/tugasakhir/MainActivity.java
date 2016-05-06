@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = null;
-                i = new Intent(MainActivity.this, MapsActivity.class);
+                i = new Intent(MainActivity.this, PetaActivity.class);
                 startActivity(i);
             }
         });
