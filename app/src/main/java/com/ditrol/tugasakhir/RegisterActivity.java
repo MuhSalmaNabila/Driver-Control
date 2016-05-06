@@ -3,19 +3,20 @@ package com.ditrol.tugasakhir;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ditrol.tugasakhir.utils.JSONParser;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +54,14 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private RegisterAccount mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mNamaLengkapView;
+    private EditText mPlatMotor;
+    private EditText mNoHp;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -60,8 +72,11 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
+        mNamaLengkapView = (EditText) findViewById(R.id.nama_lengkap);
+        mPlatMotor = (EditText) findViewById(R.id.no_plat_motor);
+        mNoHp = (EditText) findViewById(R.id.no_hp);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -107,6 +122,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String nama_lengkap = mNamaLengkapView.getText().toString();
+        String plat_motor = mPlatMotor.getText().toString();
+        String no_hp = mNoHp.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -137,8 +155,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask = new RegisterAccount(email, password, nama_lengkap, plat_motor, no_hp);
+            mAuthTask.execute("");
         }
     }
 
@@ -243,60 +261,116 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
+     * Represents an asynchronous registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    class RegisterAccount extends AsyncTask<String, Void, String> {
+
+        ProgressDialog pDialog;
+        JSONParser jParser = new JSONParser();
+        JSONArray posts = null;
+
+        private final String LOG_TAG = RegisterAccount.class.getSimpleName();
 
         private final String mEmail;
         private final String mPassword;
+        private final String mNamaLengkap;
+        private final String mPlatMotor;
+        private final String mNoHp;
 
-        UserLoginTask(String email, String password) {
+        String sUserName, sEmail, sPassword, sRePassword, sMobilePhone;
+
+        RegisterAccount(String email, String password, String nama_lengkap, String plat_motor, String no_hp) {
             mEmail = email;
             mPassword = password;
+            mNamaLengkap = nama_lengkap;
+            mPlatMotor = plat_motor;
+            mNoHp = no_hp;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+        protected void onPreExecute() {
+            showProgress(false);
+            super.onPreExecute();
+            pDialog = new ProgressDialog(RegisterActivity.this);
+            pDialog.setMessage("Loading..");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... sText) {
+            String returnResult = createAccount();
+            return returnResult;
+        }
+
+        public String createAccount()
+        {
+            String m_email = mEmail;
+            String m_password = mPassword;
+            String m_nama_lengkap = mNamaLengkap;
+            String m_plat_motor = mPlatMotor;
+            String m_no_hp = mNoHp;
+            Log.v(LOG_TAG, "Cek data: " + "email: " + mEmail + " password: " + mPassword + " nama :" + mNamaLengkap + " plat: " + mPlatMotor + "hp: " + mNoHp);
+            List<NameValuePair> parameter = new ArrayList<NameValuePair>();
+            parameter.add(new BasicNameValuePair("email", m_email));
+            parameter.add(new BasicNameValuePair("password", m_password));
+            parameter.add(new BasicNameValuePair("nama_lengkap", m_nama_lengkap));
+            parameter.add(new BasicNameValuePair("plat_motor", m_plat_motor));
+            parameter.add(new BasicNameValuePair("no_hp", m_no_hp));
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                String url_all_posts = "http://luxarcadia.com/ditrol/register_user.php" ;
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                JSONObject json = jParser.makeHttpRequest(url_all_posts,"POST", parameter);
+
+                int success = json.getInt("success");
+                if (success == 1) {
+                    return "OK";
                 }
-            }
+                else if (success == 2){
+                    return "email registered";
+                }
+                else {
+                    return "fail";
+                }
 
-            // TODO: register the new account here.
-            return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception Caught";
+            }
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            pDialog.dismiss();
+            if(result.equalsIgnoreCase("Exception Caught"))
+            {
+                Toast.makeText(RegisterActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
+            }
+            else if(result.equalsIgnoreCase("fail"))
+            {
+                Toast.makeText(RegisterActivity.this, "Registrasi gagal, coba lagi!", Toast.LENGTH_LONG).show();
+            }
+            else if(result.equalsIgnoreCase("email registered"))
+            {
+                Toast.makeText(RegisterActivity.this, "Pendaftaran Gagal! Email Anda telah terdaftar!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                //SUKSES
+                Toast.makeText(RegisterActivity.this, "Pendaftaran berhasil! Silahkan login!", Toast.LENGTH_LONG).show();
+                // Launch login activity
+                Intent intent = new Intent(
+                        RegisterActivity.this,
+                        LoginActivity.class);
+                startActivity(intent);
                 finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
             }
         }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
+
 }
 
