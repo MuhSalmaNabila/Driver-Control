@@ -41,5 +41,6 @@
 
     <!-- alert -->
     <string name="alert_edit_profile">Apakah Anda yakin ingin mengupdate profil?</string>
+    <string name="title_activity_peta">Map</string>
 
 </resources>
