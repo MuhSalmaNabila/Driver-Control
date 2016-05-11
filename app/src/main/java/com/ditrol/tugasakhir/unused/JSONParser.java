@@ -1,6 +1,6 @@
 package com.ditrol.tugasakhir.unused;
 
-/*
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -35,9 +35,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-*/
+
 public class JSONParser {
-/*
+
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
@@ -157,5 +157,4 @@ public class JSONParser {
 
     }
 
-    */
 }
