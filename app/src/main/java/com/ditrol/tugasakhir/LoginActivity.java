@@ -456,7 +456,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 // Construct the URL for the login query
                 final String BASE_URL =
-                        "http://luxarcadia.com/ditrol/read_user.php";
+                        "http://drivercontrol.info/read_user.php";
                 String EMAIL_PARAM = "email";
                 String PASS_PARAM = "password";
 
@@ -639,7 +639,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 // Construct the URL for the login query
                 final String BASE_URL =
-                        "http://luxarcadia.com/ditrol/login_task.php";
+                        "http://drivercontrol.info/login_task.php";
                 String EMAIL_PARAM = "email";
                 String PASS_PARAM = "password";
 
