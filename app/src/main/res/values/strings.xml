@@ -46,4 +46,8 @@
     <string name="alert_edit_profile">Apakah Anda yakin ingin mengupdate profil?</string>
     <string name="title_activity_peta">Map</string>
 
+    <!-- strings untuk ubah password -->
+    <string name="ubah_password">Ubah Password</string>
+    <string name="alert_ubah_password">Apakah Anda yakin ingin mengganti password?</string>
+
 </resources>

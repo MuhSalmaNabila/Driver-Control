@@ -81,6 +81,17 @@ public class SessionManagement {
         editor.commit();
     }
 
+    public void updatePasswordSession(String password){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing password in pref
+        editor.putString(KEY_PASSWORD, password);
+
+        // commit changes
+        editor.commit();
+    }
+
     /**
      * Check login method wil check user login status
      * If false it will redirect user to login page
