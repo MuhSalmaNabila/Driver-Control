@@ -321,7 +321,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             parameter.add(new BasicNameValuePair("no_hp", m_no_hp));
 
             try {
-                String url_all_posts = "http://luxarcadia.com/ditrol/register_user.php" ;
+                String url_all_posts = "http://drivercontrol.info/register_user.php" ;
 
                 JSONObject json = jParser.makeHttpRequest(url_all_posts,"POST", parameter);
 
