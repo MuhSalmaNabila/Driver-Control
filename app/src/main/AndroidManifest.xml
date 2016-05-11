@@ -121,7 +121,13 @@
 
         <activity
             android:name=".PetaActivity"
-            android:label="@string/title_activity_peta"></activity>
+            android:label="@string/title_activity_peta" />
+        <activity android:name=".UbahPasswordActivity"
+            android:label="@string/ubah_password">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileActivity" />
+        </activity>
     </application>
 
 </manifest>
