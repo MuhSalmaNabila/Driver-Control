@@ -20,7 +20,8 @@ public class SpeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed);
-        barChart = (BarChart) findViewById(R.id.chart);
+
+        BarChart barChart = (BarChart) findViewById(R.id.chart);
 
         // HorizontalBarChart barChart= (HorizontalBarChart) findViewById(R.id.chart);
 

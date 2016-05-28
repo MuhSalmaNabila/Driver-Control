@@ -346,17 +346,21 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             pDialog.dismiss();
+
             if(result.equalsIgnoreCase("Exception Caught"))
             {
                 Toast.makeText(RegisterActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
+                finish();
             }
             else if(result.equalsIgnoreCase("fail"))
             {
                 Toast.makeText(RegisterActivity.this, "Registrasi gagal, coba lagi!", Toast.LENGTH_LONG).show();
+                finish();
             }
             else if(result.equalsIgnoreCase("email registered"))
             {
                 Toast.makeText(RegisterActivity.this, "Pendaftaran Gagal! Email Anda telah terdaftar!", Toast.LENGTH_LONG).show();
+                finish();
             }
             else {
                 //SUKSES
