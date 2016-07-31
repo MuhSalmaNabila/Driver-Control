@@ -14,19 +14,19 @@
                 android:orderInCategory="100"
                 android:icon="@drawable/htu"
                 android:title="How to use"
-                app:showAsAction="never" />
+                app:showAsAction="always" />
             <item
                 android:id="@+id/action_record"
                 android:orderInCategory="100"
                 android:icon="@drawable/record"
                 android:title="Data record"
-                app:showAsAction="never" />
+                app:showAsAction="always" />
             <item
                 android:id="@+id/action_about"
                 android:orderInCategory="100"
                 android:icon="@drawable/about"
                 android:title="About"
-                app:showAsAction="never" />
+                app:showAsAction="always" />
             <item
                 android:id="@+id/action_logout"
                 android:orderInCategory="100"
