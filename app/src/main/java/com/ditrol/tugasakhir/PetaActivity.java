@@ -47,7 +47,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
     JSONParser jParser = new JSONParser();
     JSONArray lokasi = null;
-    String url_lokasi = "http://adikistanto.esy.es/nyarishop/read_location_ditrol.php";
+    String url_lokasi = "http://drivercontrol.info/read_location.php";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_LOKASI = "produk";
     public static final String TAG_LATITUDE = "latitude";
@@ -67,6 +67,8 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peta);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initilizeMap();
         new ReadLocationTask().execute();
@@ -86,17 +88,9 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSION_ACCESS_COARSE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
                     setUpLocation();
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
@@ -155,9 +149,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     for (int i = 0; i < lokasi.length() ; i++){
                         JSONObject c = lokasi.getJSONObject(i);
                         latitudeStr = c.getString(TAG_LATITUDE);
-                        Log.v("succes",""+latitudeStr);
                         longitudeStr = c.getString(TAG_LONGITUDE);
-                        Log.v("succes",""+longitudeStr);
                     }
                     return "OK";
                 }
@@ -254,7 +246,8 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private void showLocation (double latitude, double longitude){
         LatLng lokasi = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(lokasi).title("Lokasi Motor")).showInfoWindow();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lokasi));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 13));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(lokasi));
     }
 
     private void initilizeMap() {
