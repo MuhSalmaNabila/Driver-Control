@@ -414,7 +414,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Log.v(LOG_TAG,"Password ada di Db: " + db_password);
                         id_user = db_id_user;
                         username = db_username;
-                        password =db_password;
+                        password = db_password;
                         no_hp = db_no_hp;
                         email = db_email;
                         plat_motor = db_plat_motor;

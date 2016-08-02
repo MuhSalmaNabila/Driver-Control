@@ -364,7 +364,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
             else {
                 //SUKSES
-                Toast.makeText(RegisterActivity.this, "Pendaftaran berhasil! Silahkan login!", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Selamat pendaftaran berhasil dilakukan! Silahkan login menggunakan akun Anda", Toast.LENGTH_LONG).show();
                 // Launch login activity
                 Intent intent = new Intent(
                         RegisterActivity.this,

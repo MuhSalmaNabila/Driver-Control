@@ -2,6 +2,7 @@ package com.ditrol.tugasakhir;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UbahPasswordActivity extends AppCompatActivity {
@@ -28,8 +28,10 @@ public class UbahPasswordActivity extends AppCompatActivity {
     EditText etPassLama;
     EditText etPassBaru;
     EditText etUlangiPassBaru;
-    SessionManagement session;
 
+
+    // Session Management Class
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,12 @@ public class UbahPasswordActivity extends AppCompatActivity {
 
         // Session class instance
         session = new SessionManagement(getApplicationContext());
-        // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
-        // name
-        String userId = user.get(SessionManagement.KEY_ID);
+
+        // mendapatkan password dari intent
+        Intent intent = getIntent();
+        String userId = intent.getStringExtra("id");
         sId = userId;
-        String userPassword = user.get(SessionManagement.KEY_PASSWORD);
+        String userPassword = intent.getStringExtra("password");
         sPassLama1 = userPassword;
 
         etPassLama = (EditText)findViewById(R.id.et_pass_lama);

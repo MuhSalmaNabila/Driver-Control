@@ -51,7 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = user.get(SessionManagement.KEY_ID);
         sId = userId;
         String userName = user.get(SessionManagement.KEY_USERNAME);
-        String userPassword = user.get(SessionManagement.KEY_PASSWORD);
+        String userPass = user.get(SessionManagement.KEY_PASSWORD);
+        sPwd1 = userPass;
         String userPlatMotor = user.get(SessionManagement.KEY_PLAT_MOTOR);
         String userEmail = user.get(SessionManagement.KEY_EMAIL);
         String userNoHp = user.get(SessionManagement.KEY_NO_HP);
@@ -74,6 +75,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = null;
                 i = new Intent(getBaseContext(), UbahPasswordActivity.class);
+                i.putExtra("id",sId);
+                i.putExtra("password",sPwd1);
                 startActivity(i);
             }
         });
