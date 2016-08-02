@@ -533,6 +533,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (strings!=null) {
+                Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
                 session.createLoginSession(id_user, username, password, plat_motor, email, no_hp);
                 Intent i = null;
                 i = new Intent(LoginActivity.this, MainActivity.class);
@@ -713,12 +714,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(String strings) {
             mAuthTask = null;
-            showProgress(false);
 
             if (strings!=null) {
                 if(emailDb){
                     if(passwordDb){
-                        Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
+
                     }else{
                         Toast.makeText(LoginActivity.this, "Password yang Anda masukkan salah! Silahkan ulangi kembali.", Toast.LENGTH_SHORT).show();
                         mPasswordView.requestFocus();
