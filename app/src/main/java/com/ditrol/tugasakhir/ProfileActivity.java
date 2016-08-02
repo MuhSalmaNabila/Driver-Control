@@ -168,7 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Loading..");
+            pDialog.setMessage("Proses...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -213,14 +213,12 @@ public class ProfileActivity extends AppCompatActivity {
 
                 int success = json.getInt("success");
 
-                if (success == 1) {
+                if (success == 1){
                     session.createLoginSession(sId, sNama, sPwd1, sPlatMotor, sEmail, sNope);
                     return "OK";
-                }
-                else if (success == 2){
+                }else if (success == 2){
                     return "email registered";
-                }
-                else {
+                }else{
                     return "fail";
                 }
 
@@ -234,17 +232,12 @@ public class ProfileActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             pDialog.dismiss();
-            if(result.equalsIgnoreCase("Exception Caught"))
-            {
-                Toast.makeText(ProfileActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
-            }
-            else if(result.equalsIgnoreCase("fail"))
-            {
+            if(result.equalsIgnoreCase("Exception Caught")) {
+                Toast.makeText(ProfileActivity.this, "Terjadi kesalahan! Silahkan ulangi kembali", Toast.LENGTH_LONG).show();
+            } else if(result.equalsIgnoreCase("fail")) {
                 Toast.makeText(ProfileActivity.this, "Perubahan gagal disimpan, silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
-            } else {
+            }else {
                 //SUKSES
-                //alert.showAlertDialog(ProfileActivity.this, "Pendaftaran berhasil", "Silahkan cek email untuk verifikasi", true);
-
                 etUsername.setText(sNama);
                 etPlatMotor.setText(sPlatMotor);
                 etEmail.setText(sEmail);
