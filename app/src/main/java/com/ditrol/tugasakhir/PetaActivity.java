@@ -9,11 +9,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,10 +23,7 @@ import com.ditrol.tugasakhir.unused.JSONParser;
 import com.ditrol.tugasakhir.utils.MyLocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -86,9 +81,9 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSION_ACCESS_COARSE_LOCATION);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
 
 
@@ -179,6 +174,14 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private void setUpLocation(){
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSION_ACCESS_COARSE_LOCATION);
+        }
         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         mylistener = new MyLocationListener(PetaActivity.this);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, mylistener);
@@ -187,7 +190,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     }
 
     private void cariLokasiKita(){
-        if(isNetworkEnabled==true){
+        if(isNetworkEnabled){
             if((String.valueOf(mylistener.getLatitude())!=null) || (String.valueOf(mylistener.getLongitude())!=null)){
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mylistener.getLatitude(),mylistener.getLongitude()), 10));
                 createMarker("Lokasi Anda","",mylistener.getLatitude(),mylistener.getLongitude());
@@ -266,6 +269,14 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
             mMap =((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
             mMap.getUiSettings().setMapToolbarEnabled(true);
             mMap.setOnMyLocationButtonClickListener(this);
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSION_ACCESS_COARSE_LOCATION);
+            }
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             if (mMap == null) {
