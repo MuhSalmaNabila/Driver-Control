@@ -74,9 +74,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ubah Data"
+        android:text="Ubah Profil"
         android:id="@+id/bedit"
-        android:onClick="showPopup" />
+        android:onClick="ubahProfil" />
 
     <Button
         android:layout_width="match_parent"
