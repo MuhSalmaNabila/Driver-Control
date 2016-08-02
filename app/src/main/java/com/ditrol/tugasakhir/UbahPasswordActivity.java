@@ -2,10 +2,12 @@ package com.ditrol.tugasakhir;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class UbahPasswordActivity extends AppCompatActivity {
 
-    String sId, sPassLama1 , sPassLama2, sPassBaru, sUlangiPassBaru;
+    String sId, sPassLama1, sPassLama2, sPassBaru, sUlangiPassBaru;
     EditText etPassLama;
     EditText etPassBaru;
     EditText etUlangiPassBaru;
@@ -51,14 +53,41 @@ public class UbahPasswordActivity extends AppCompatActivity {
 
     }
 
-    public void showPopupUbahPassword(View v){
+    public void ubahPassword(View v){
+        View focusView=null;
+        Boolean cancel = false;
+        etPassLama.setError(null);
+        etPassBaru.setError(null);
+        etUlangiPassBaru.setError(null);
 
-        String pass_lama = etPassLama.getText().toString();
-        sPassLama2 = pass_lama;
-        String pass_baru = etPassBaru.getText().toString();
-        sPassBaru = pass_baru;
-        String ulangi_pass_baru = etUlangiPassBaru.getText().toString();
-        sUlangiPassBaru = ulangi_pass_baru;
+        sPassLama2 = etPassLama.getText().toString();
+        sPassBaru = etPassBaru.getText().toString();
+        sUlangiPassBaru = etUlangiPassBaru.getText().toString();
+
+        if (TextUtils.isEmpty(sPassLama2)) {
+            etPassLama.setError(getString(R.string.error_field_required));
+            focusView = etPassLama;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sPassBaru)) {
+            etPassBaru.setError(getString(R.string.error_field_required));
+            focusView = etPassBaru;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sUlangiPassBaru)) {
+            etUlangiPassBaru.setError(getString(R.string.error_field_required));
+            focusView = etUlangiPassBaru;
+            cancel = true;
+        }
+        if(cancel){
+            //jika ada error (data kosong)
+            focusView.requestFocus();
+        }else{
+            showPopupUbahPassword();
+        }
+    }
+
+    public void showPopupUbahPassword(){
 
         if(sPassLama1.equals(sPassLama2)){
 
@@ -66,7 +95,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
                 // set prompts.xml to alertdialog builder
-                alertDialogBuilder.setView(R.layout.popup_profile);
+                alertDialogBuilder.setView(R.layout.popup_password);
                 //alertDialogBuilder.setView(textView);
 
                 // set dialog message
@@ -96,8 +125,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
     }
 
 
-    class UbahPassword extends AsyncTask<String, Void, String>
-    {
+    class UbahPassword extends AsyncTask<String, Void, String> {
         ProgressDialog pDialog;
         JSONParser jParser = new JSONParser();
         JSONArray posts = null;
@@ -106,7 +134,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(UbahPasswordActivity.this);
-            pDialog.setMessage("Loading..");
+            pDialog.setMessage("Proses...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -131,10 +159,9 @@ public class UbahPasswordActivity extends AppCompatActivity {
 
             try {
 
-                // String url_all_posts = "http://api.vhiefa.net76.net/whatson/create_account.php" ;
-                String url_all_posts = "http://drivercontrol.info/update_password.php" ;
+                String url_ubah_password = "http://drivercontrol.info/update_password.php" ;
 
-                JSONObject json = jParser.makeHttpRequest(url_all_posts,"POST", parameter);
+                JSONObject json = jParser.makeHttpRequest(url_ubah_password,"POST", parameter);
 
                 int success = json.getInt("success");
 
@@ -143,7 +170,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
                     return "OK";
                 }
                 else if (success == 2){
-                    return "email registered";
+                    return "password equals";
                 }
                 else {
                     return "fail";
@@ -159,21 +186,19 @@ public class UbahPasswordActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             pDialog.dismiss();
-            if(result.equalsIgnoreCase("Exception Caught"))
-            {
-                Toast.makeText(UbahPasswordActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
-            }
-            else if(result.equalsIgnoreCase("fail"))
-            {
+            if(result.equalsIgnoreCase("Exception Caught")) {
+                Toast.makeText(UbahPasswordActivity.this, "Terjadi kesalahan. Silahkan ulangi kembali.", Toast.LENGTH_LONG).show();
+            }else if(result.equalsIgnoreCase("fail")) {
                 Toast.makeText(UbahPasswordActivity.this, "Perubahan gagal disimpan, silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
-            } else {
+            }else if(result.equalsIgnoreCase("password equals")) {
+                Toast.makeText(UbahPasswordActivity.this, "Password baru sama dengan password lama, silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
+            }else {
                 //SUKSES
-                Toast.makeText(UbahPasswordActivity.this, "Password berhasil diubah!", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(UbahPasswordActivity.this, "Password berhasil diubah! Silahkan login kembali.", Toast.LENGTH_LONG).show();
+                Intent i = null;
+                i = new Intent(UbahPasswordActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         }
-
     }
-
-
 }
