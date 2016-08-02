@@ -2,7 +2,6 @@ package com.ditrol.tugasakhir;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -191,9 +190,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
             }else {
                 //SUKSES
                 Toast.makeText(UbahPasswordActivity.this, "Password berhasil diubah! Silahkan login kembali.", Toast.LENGTH_LONG).show();
-                Intent i = null;
-                i = new Intent(UbahPasswordActivity.this, LoginActivity.class);
-                startActivity(i);
+                session.logoutUser();
             }
         }
     }
