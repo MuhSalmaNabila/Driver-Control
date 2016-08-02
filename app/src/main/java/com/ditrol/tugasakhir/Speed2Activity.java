@@ -87,10 +87,10 @@ public class Speed2Activity extends AppCompatActivity {
             // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
             List<Column> columns = new ArrayList<Column>();
             List<SubcolumnValue> values;
-            for (int i = 1; i < numColumns; ++i) {
+            for (int i = 0; i < numColumns; ++i) {
 
                 values = new ArrayList<SubcolumnValue>();
-                for (int j = 1; j < numSubcolumns; ++j) {
+                for (int j = 0; j < numSubcolumns; ++j) {
                     values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
                 }
 
