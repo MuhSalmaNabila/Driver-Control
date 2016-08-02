@@ -168,11 +168,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
                 if (success == 1) {
                     session.updatePasswordSession(sPassBaru);
                     return "OK";
-                }
-                else if (success == 2){
-                    return "password equals";
-                }
-                else {
+                }else {
                     return "fail";
                 }
 
