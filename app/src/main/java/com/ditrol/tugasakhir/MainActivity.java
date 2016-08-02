@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }else if(id == R.id.action_record){
             Intent i = null;
-            i = new Intent(MainActivity.this, RecordActivity.class);
+            i = new Intent(MainActivity.this, RecordNewActivity.class);
             startActivity(i);
         }else if(id == R.id.action_about){
             Intent i = null;

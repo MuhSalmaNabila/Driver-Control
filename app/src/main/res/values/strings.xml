@@ -49,5 +49,7 @@
     <!-- strings untuk ubah password -->
     <string name="ubah_password">Ubah Password</string>
     <string name="alert_ubah_password">Apakah Anda yakin ingin mengganti password?</string>
+    <string name="title_activity_record_new">Record Data</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>
