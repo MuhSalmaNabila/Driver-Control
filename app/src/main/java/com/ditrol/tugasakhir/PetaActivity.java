@@ -15,6 +15,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ditrol.tugasakhir.unused.JSONParser;
@@ -62,6 +64,19 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peta);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        initilizeMap();
+
+
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            new ReadLocationTask().execute();;
+        } else {
+            String lat= extras.getString("latitude");
+            String lon= extras.getString("longitude");
+            showLocation(Double.valueOf(lat),Double.valueOf(lon));
+        }
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -71,14 +86,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        try{
-            initilizeMap();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        new ReadLocationTask().execute();
+
     }
 
 
@@ -277,5 +285,16 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
                         .show();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            int SUCCESS_RESULT=1;
+            setResult(SUCCESS_RESULT, new Intent());
+            finish();  //return to caller
+            return true;
+        }
+        return false;
     }
 }

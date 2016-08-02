@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ditrol.tugasakhir.RecordNewActivity">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="Date Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/pesan_kosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/jam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jam"
+            android:padding="2dp"
+            android:textStyle="bold"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="30dp" />
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latitude"
+            android:padding="2dp"
+            android:textStyle="bold"
+            android:layout_marginRight="15dp" />
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longitude"
+            android:padding="2dp"
+            android:textStyle="bold"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp" />
+        <TextView
+            android:id="@+id/kecepatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kecepatan"
+            android:padding="2dp"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp" />
+        <TextView
+            android:id="@+id/cek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cek"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/gateListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+
+</LinearLayout>

@@ -61,27 +61,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".HowtouseActivity"
-            android:label="@string/howtouse">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".RecordActivity"
-            android:label="@string/record">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".AboutActivity"
-            android:label="@string/about">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".unused.Login"
             android:label="@string/title_activity_home2"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -144,13 +123,22 @@
 
         <activity
             android:name=".PetaActivity"
-            android:label="@string/title_activity_peta" />
+            android:label="@string/title_activity_peta">
+        </activity>
         <activity
             android:name=".UbahPasswordActivity"
             android:label="@string/ubah_password">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileActivity" />
+        </activity>
+        <activity
+            android:name=".RecordNewActivity"
+            android:label="@string/title_activity_record_new"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
