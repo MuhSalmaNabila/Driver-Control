@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,7 +80,56 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public void showPopup(View v){
+    public void ubahProfil(View v){
+        View focusView=null;
+        Boolean cancel = false;
+        etUsername.setError(null);
+        etEmail.setError(null);
+        etPlatMotor.setError(null);
+        etNoHp.setError(null);
+
+        sNama = etUsername.getText().toString();
+        sEmail = etEmail.getText().toString();
+        sPlatMotor = etPlatMotor.getText().toString();
+        sNope = etNoHp.getText().toString();
+
+        if (TextUtils.isEmpty(sNama)) {
+            etUsername.setError(getString(R.string.error_field_required));
+            focusView = etUsername;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sEmail)) {
+            etEmail.setError(getString(R.string.error_field_required));
+            focusView = etEmail;
+            cancel = true;
+        }else if(!isEmailValid(sEmail)){
+            etEmail.setError(getString(R.string.error_invalid_email));
+            focusView = etEmail;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sPlatMotor)) {
+            etPlatMotor.setError(getString(R.string.error_field_required));
+            focusView = etPlatMotor;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sNope)) {
+            etNoHp.setError(getString(R.string.error_field_required));
+            focusView = etNoHp;
+            cancel = true;
+        }
+        if(cancel){
+            //jika ada error (data kosong)
+            focusView.requestFocus();
+        }else{
+            showPopupProfil();
+        }
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    public void showPopupProfil(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         TextView textView = new TextView(getApplicationContext());
