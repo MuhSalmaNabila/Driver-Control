@@ -1,38 +1,138 @@
 package com.ditrol.tugasakhir;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ditrol.tugasakhir.utils.JSONParser;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.ColumnChartView;
 
 public class Speed2Activity extends AppCompatActivity {
 
 
+    SessionManagement session;
+    String idMotor;
+    Double[] speedValue = new Double[24];
+    int[] average = new int[24];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed2);
+
+        // Initiate array speed
+        resetArray();
+        // Update speed
+        updateSpeedTask us = new updateSpeedTask();
+        us.execute();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
+
+        // Session class instance
+        session = new SessionManagement(getApplicationContext());
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        // no plat motor digunakan sebagai id
+        String userPlatMotor = user.get(SessionManagement.KEY_PLAT_MOTOR);
+        idMotor = userPlatMotor;
+
+    }
+
+    public void resetArray(){
+        // Initiate array for speed
+        speedValue[0]=0.0;
+        speedValue[1]=0.0;
+        speedValue[2]=0.0;
+        speedValue[3]=0.0;
+        speedValue[4]=0.0;
+        speedValue[5]=0.0;
+        speedValue[6]=0.0;
+        speedValue[7]=0.0;
+        speedValue[8]=0.0;
+        speedValue[9]=0.0;
+        speedValue[10]=0.0;
+        speedValue[11]=0.0;
+        speedValue[12]=0.0;
+        speedValue[13]=0.0;
+        speedValue[14]=0.0;
+        speedValue[15]=0.0;
+        speedValue[16]=0.0;
+        speedValue[17]=0.0;
+        speedValue[18]=0.0;
+        speedValue[19]=0.0;
+        speedValue[20]=0.0;
+        speedValue[21]=0.0;
+        speedValue[22]=0.0;
+        speedValue[23]=0.0;
+
+        // Initiate array for average
+        average[0] = 0;
+        average[1] = 0;
+        average[2] = 0;
+        average[3] = 0;
+        average[4] = 0;
+        average[5] = 0;
+        average[6] = 0;
+        average[7] = 0;
+        average[8] = 0;
+        average[9] = 0;
+        average[10] = 0;
+        average[11] = 0;
+        average[12] = 0;
+        average[13] = 0;
+        average[14] = 0;
+        average[15] = 0;
+        average[16] = 0;
+        average[17] = 0;
+        average[18] = 0;
+        average[19] = 0;
+        average[20] = 0;
+        average[21] = 0;
+        average[22] = 0;
+        average[23] = 0;
+
+    }
+
+    public void updateSpeed(View view){
+        updateSpeedTask us = new updateSpeedTask();
+        us.execute();
+        getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.container)).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+
+    }
+
+    public Double[] getSpeed(){
+        return speedValue;
+    }
+
+    public int[] getAverage(){
+        return average;
     }
 
     /**
@@ -87,11 +187,25 @@ public class Speed2Activity extends AppCompatActivity {
             // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
             List<Column> columns = new ArrayList<Column>();
             List<SubcolumnValue> values;
-            for (int i = 0; i < numColumns; ++i) {
 
+            Speed2Activity speed2Activity = (Speed2Activity)getActivity();
+            Double[] speed = speed2Activity.getSpeed();
+            Double speedValue = 0.0;
+            int[] average = speed2Activity.getAverage();
+            int averageValue = 0;
+
+            for (int i = 0; i < numColumns; ++i) {
                 values = new ArrayList<SubcolumnValue>();
+                averageValue = average[i];
+                if(averageValue != 0){
+                    speedValue = speed[i]/average[i];
+                }else{
+                    speedValue = speed[i];
+                }
+                //float speedFloat = speedValue/(1.0278-(.0278*reps));
+                float speedFloat = Float.valueOf(String.valueOf(speedValue));
                 for (int j = 0; j < numSubcolumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+                    values.add(new SubcolumnValue(speedFloat, ChartUtils.pickColor()));
                 }
 
                 Column column = new Column(values);
@@ -367,7 +481,7 @@ public class Speed2Activity extends AppCompatActivity {
 
             @Override
             public void onValueSelected(int columnIndex, int subcolumnIndex, SubcolumnValue value) {
-                Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Kecepatan: " + value, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -379,4 +493,202 @@ public class Speed2Activity extends AppCompatActivity {
         }
 
     }
+
+    class updateSpeedTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog pDialog;
+        JSONParser jParser = new JSONParser();
+        JSONArray posts = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Speed2Activity.this);
+            pDialog.setMessage("Proses...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... sText) {
+            String returnResult = getSpeed();
+            return returnResult;
+
+        }
+
+        public String getSpeed()
+        {
+            List<NameValuePair> parameter = new ArrayList<NameValuePair>();
+            parameter.add(new BasicNameValuePair("id", idMotor)); // id motor menggunakan no plat motor
+
+            // param
+            final String KECEPATAN = "kecepatan";
+            final String TANGGAL = "tanggal";
+            final String JAM = "jam";
+
+            try {
+                // String url_all_posts = "http://api.vhiefa.net76.net/whatson/create_account.php" ;
+                String url_all_posts = "http://drivercontrol.info/read_speed.php" ;
+
+                JSONObject json = jParser.makeHttpRequest(url_all_posts,"POST", parameter);
+
+                JSONArray jsonArray = json.getJSONArray("speed");
+                int length = jsonArray.length();
+
+                Log.v("Kecepatan", "Panjang Array: " + length);
+
+                for(int n=0; n < length; n++){
+                    JSONObject speed = jsonArray.getJSONObject(n);
+                    int kecepatan = speed.getInt(KECEPATAN);
+                    String jam = speed.getString(JAM);
+                    String[] timeArray = jam.split("");
+
+                    String sHour;
+                    if(!timeArray[2].equals(":")){
+                        sHour = timeArray[1]+timeArray[2];
+                    }else{
+                        sHour = timeArray[1];
+                    }
+
+                    int hour = Integer.valueOf(sHour);
+
+                    switch (hour){
+                        case 0:
+                            speedValue[0] = speedValue[0]+kecepatan;
+                            average[0] = average[0]+1;
+                            break;
+                        case 1:
+                            speedValue[1] = speedValue[1]+kecepatan;
+                            average[1] = average[1]+1;
+                            break;
+                        case 2:
+                            speedValue[2] = speedValue[2]+kecepatan;
+                            average[2] = average[2]+1;
+                            break;
+                        case 3:
+                            speedValue[3] = speedValue[3]+kecepatan;
+                            average[3] = average[3]+1;
+                            break;
+                        case 4:
+                            speedValue[4] = speedValue[4]+kecepatan;
+                            average[4] = average[4]+1;
+                            break;
+                        case 5:
+                            speedValue[5] = speedValue[5]+kecepatan;
+                            average[5] = average[5]+1;
+                            break;
+                        case 6:
+                            speedValue[6] = speedValue[6]+kecepatan;
+                            average[6] = average[6]+1;
+                            break;
+                        case 7:
+                            speedValue[7] = speedValue[7]+kecepatan;
+                            average[7] = average[7]+1;
+                            break;
+                        case 8:
+                            speedValue[8] = speedValue[8]+kecepatan;
+                            average[8] = average[8]+1;
+                            break;
+                        case 9:
+                            speedValue[9] = speedValue[9]+kecepatan;
+                            average[9] = average[9]+1;
+                            break;
+                        case 10:
+                            speedValue[10] = speedValue[10]+kecepatan;
+                            average[10] = average[10]+1;
+                            break;
+                        case 11:
+                            speedValue[11] = speedValue[11]+kecepatan;
+                            average[11] = average[11]+1;
+                            break;
+                        case 12:
+                            speedValue[12] = speedValue[12]+kecepatan;
+                            average[12] = average[12]+1;
+                            break;
+                        case 13:
+                            speedValue[13] = speedValue[13]+kecepatan;
+                            average[13] = average[13]+1;
+                            break;
+                        case 14:
+                            speedValue[14] = speedValue[14]+kecepatan;
+                            average[14] = average[14]+1;
+                            break;
+                        case 15:
+                            speedValue[15] = speedValue[15]+kecepatan;
+                            average[15] = average[15]+1;
+                            break;
+                        case 16:
+                            speedValue[16] = speedValue[16]+kecepatan;
+                            average[16] = average[16]+1;
+                            break;
+                        case 17:
+                            speedValue[17] = speedValue[17]+kecepatan;
+                            average[17] = average[17]+1;
+                            break;
+                        case 18:
+                            speedValue[18] = speedValue[18]+kecepatan;
+                            average[18] = average[18]+1;
+                            break;
+                        case 19:
+                            speedValue[19] = speedValue[19]+kecepatan;
+                            average[19] = average[19]+1;
+                            break;
+                        case 20:
+                            speedValue[20] = speedValue[20]+kecepatan;
+                            average[20] = average[20]+1;
+                            break;
+                        case 21:
+                            speedValue[21] = speedValue[21]+kecepatan;
+                            average[21] = average[21]+1;
+                            break;
+                        case 22:
+                            speedValue[22] = speedValue[22]+kecepatan;
+                            average[22] = average[22]+1;
+                            break;
+                        case 23:
+                            speedValue[23] = speedValue[23]+kecepatan;
+                            average[23] = average[23]+1;
+                            break;
+                    }
+
+                    Log.v("Hasil", "Ke-"+ n + " : " + kecepatan + " - " + jam);
+
+
+                }
+
+                int success = json.getInt("success");
+
+                if (success == 1){
+                    return "OK";
+                }else{
+                    return "fail";
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception Caught";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            pDialog.dismiss();
+            if(result.equalsIgnoreCase("Exception Caught")) {
+                Toast.makeText(Speed2Activity.this, "Terjadi kesalahan. Silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
+            } else if(result.equalsIgnoreCase("fail")) {
+                Toast.makeText(Speed2Activity.this, "Tidak dapat mendapatkan data kecepatan. Silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
+            }else {
+                //SUKSES
+                //etUsername.setText(sNama);
+                //etPlatMotor.setText(sPlatMotor);
+                //etEmail.setText(sEmail);
+                //etNoHp.setText(sNope);
+                //Toast.makeText(Speed2Activity.this, "Berhasil mendapatkan kecepatan.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
 }
