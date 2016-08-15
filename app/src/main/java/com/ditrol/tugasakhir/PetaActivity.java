@@ -16,7 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.ditrol.tugasakhir.unused.JSONParser;
@@ -66,7 +65,11 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        initilizeMap();
+        try{
+            initilizeMap();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         String lati = getIntent().getStringExtra("latitude");
@@ -137,7 +140,11 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
             {
                 Toast.makeText(PetaActivity.this, "Data empty", Toast.LENGTH_LONG).show();
             }else{
-                showLocation (Double.valueOf(latitudeStr), Double.valueOf(longitudeStr));
+                try{
+                    showLocation (Double.valueOf(latitudeStr), Double.valueOf(longitudeStr));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
         }

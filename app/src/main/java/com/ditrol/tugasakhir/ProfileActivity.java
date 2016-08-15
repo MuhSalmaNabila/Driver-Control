@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = user.get(SessionManagement.KEY_ID);
         sId = userId;
         String userName = user.get(SessionManagement.KEY_USERNAME);
-        String userPassword = user.get(SessionManagement.KEY_PASSWORD);
+        String userPass = user.get(SessionManagement.KEY_PASSWORD);
+        sPwd1 = userPass;
         String userPlatMotor = user.get(SessionManagement.KEY_PLAT_MOTOR);
         String userEmail = user.get(SessionManagement.KEY_EMAIL);
         String userNoHp = user.get(SessionManagement.KEY_NO_HP);
@@ -73,13 +75,64 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = null;
                 i = new Intent(getBaseContext(), UbahPasswordActivity.class);
+                i.putExtra("id",sId);
+                i.putExtra("password",sPwd1);
                 startActivity(i);
             }
         });
 
     }
 
-    public void showPopup(View v){
+    public void ubahProfil(View v){
+        View focusView=null;
+        Boolean cancel = false;
+        etUsername.setError(null);
+        etEmail.setError(null);
+        etPlatMotor.setError(null);
+        etNoHp.setError(null);
+
+        sNama = etUsername.getText().toString();
+        sEmail = etEmail.getText().toString();
+        sPlatMotor = etPlatMotor.getText().toString();
+        sNope = etNoHp.getText().toString();
+
+        if (TextUtils.isEmpty(sNama)) {
+            etUsername.setError(getString(R.string.error_field_required));
+            focusView = etUsername;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sEmail)) {
+            etEmail.setError(getString(R.string.error_field_required));
+            focusView = etEmail;
+            cancel = true;
+        }else if(!isEmailValid(sEmail)){
+            etEmail.setError(getString(R.string.error_invalid_email));
+            focusView = etEmail;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sPlatMotor)) {
+            etPlatMotor.setError(getString(R.string.error_field_required));
+            focusView = etPlatMotor;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(sNope)) {
+            etNoHp.setError(getString(R.string.error_field_required));
+            focusView = etNoHp;
+            cancel = true;
+        }
+        if(cancel){
+            //jika ada error (data kosong)
+            focusView.requestFocus();
+        }else{
+            showPopupProfil();
+        }
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    public void showPopupProfil(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         TextView textView = new TextView(getApplicationContext());
@@ -118,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Loading..");
+            pDialog.setMessage("Proses...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -163,14 +216,12 @@ public class ProfileActivity extends AppCompatActivity {
 
                 int success = json.getInt("success");
 
-                if (success == 1) {
+                if (success == 1){
                     session.createLoginSession(sId, sNama, sPwd1, sPlatMotor, sEmail, sNope);
                     return "OK";
-                }
-                else if (success == 2){
+                }else if (success == 2){
                     return "email registered";
-                }
-                else {
+                }else{
                     return "fail";
                 }
 
@@ -184,17 +235,12 @@ public class ProfileActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             pDialog.dismiss();
-            if(result.equalsIgnoreCase("Exception Caught"))
-            {
-                Toast.makeText(ProfileActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
-            }
-            else if(result.equalsIgnoreCase("fail"))
-            {
+            if(result.equalsIgnoreCase("Exception Caught")) {
+                Toast.makeText(ProfileActivity.this, "Terjadi kesalahan! Silahkan ulangi kembali", Toast.LENGTH_LONG).show();
+            } else if(result.equalsIgnoreCase("fail")) {
                 Toast.makeText(ProfileActivity.this, "Perubahan gagal disimpan, silahkan ulangi kembali!", Toast.LENGTH_LONG).show();
-            } else {
+            }else {
                 //SUKSES
-                //alert.showAlertDialog(ProfileActivity.this, "Pendaftaran berhasil", "Silahkan cek email untuk verifikasi", true);
-
                 etUsername.setText(sNama);
                 etPlatMotor.setText(sPlatMotor);
                 etEmail.setText(sEmail);
