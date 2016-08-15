@@ -13,6 +13,7 @@
         android:layout_gravity="center"
         android:padding="5dp"
         android:textStyle="bold"
+        android:text="tes"
         android:textSize="20sp"
         android:layout_marginTop="50dp" />
     <LinearLayout

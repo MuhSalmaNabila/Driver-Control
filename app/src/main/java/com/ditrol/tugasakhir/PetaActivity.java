@@ -72,13 +72,13 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
         }
 
 
-        Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            new ReadLocationTask().execute();;
+        String lati = getIntent().getStringExtra("latitude");
+        String longi = getIntent().getStringExtra("longitude");
+        if((lati==null) && (longi==null)){
+            new ReadLocationTask().execute();
+            Log.v("access asyncTask","true");
         } else {
-            String lat= extras.getString("latitude");
-            String lon= extras.getString("longitude");
-            showLocation(Double.valueOf(lat),Double.valueOf(lon));
+            showLocation(Double.valueOf(lati),Double.valueOf(longi));
         }
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -114,6 +114,8 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = ProgressDialog.show(PetaActivity.this,"",
+                    "processing...", false);
             //progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -127,7 +129,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            //pDialog.dismiss();
+            pDialog.dismiss();
             //progressBar.setVisibility(View.GONE);
             if(result.equalsIgnoreCase("Exception Caught"))
             {

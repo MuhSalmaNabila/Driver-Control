@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -69,11 +70,13 @@ public class LockActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = ProgressDialog.show(LockActivity.this,"",
+                    "processing...", false);
         }
 
         @Override
         protected String doInBackground(String... sText) {
-            String returnResult = getLocation(); //memanggil method getTokoList()
+            String returnResult = getLocation();
             return returnResult;
 
         }
@@ -81,6 +84,7 @@ public class LockActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            pDialog.dismiss();
             if(result.equalsIgnoreCase("Exception Caught"))
             {
                 Toast.makeText(LockActivity.this, "Unable to connect to server,please check your internet connection!", Toast.LENGTH_LONG).show();
@@ -90,7 +94,7 @@ public class LockActivity extends AppCompatActivity {
             {
                 Toast.makeText(LockActivity.this, "Data empty", Toast.LENGTH_LONG).show();
             }else{
-                if(statusMesin.equalsIgnoreCase("1")){
+                if(statusMesin.equalsIgnoreCase("relayhidup")){
                     statusMesinTV.setText("Mesin Motor Hidup");
                     kotakKonfirmasi.setVisibility(View.VISIBLE);
                 }else{
@@ -113,7 +117,8 @@ public class LockActivity extends AppCompatActivity {
                     lokasi = json.getJSONArray(TAG_PRODUK);
                     for (int i = 0; i < lokasi.length() ; i++){
                         JSONObject c = lokasi.getJSONObject(i);
-                        statusMesin = c.getString(TAG_STATUS);
+                        statusMesin = c.getString("status_relay");
+                        Log.v("status_relay",statusMesin);
                     }
                     return "OK";
                 }
