@@ -1,6 +1,8 @@
 package com.ditrol.tugasakhir;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -70,6 +72,33 @@ public class MainActivity extends AppCompatActivity {
         // Session class instance
         session = new SessionManagement(getApplicationContext());
         session.checkLogin();
+
+    }
+    public void showPopupLogout(){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(R.layout.popup_logout);
+        //alertDialogBuilder.setView(textView);
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                session.logoutUser();
+            }
+        });
+
+        alertDialogBuilder.setCancelable(true).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+
+        alertDialog.show();
     }
 
     @Override
@@ -95,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
         }else if(id == R.id.action_logout){
-            session.logoutUser();
+            showPopupLogout();
             return true;
         }
 

@@ -723,13 +723,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }else{
                         Toast.makeText(LoginActivity.this, "Password yang Anda masukkan salah! Silahkan ulangi kembali.", Toast.LENGTH_SHORT).show();
                         mPasswordView.requestFocus();
+                        showProgress(false);
                     }
                 }else {
                     Toast.makeText(LoginActivity.this, "Email yang anda masukkan belum terdaftar.", Toast.LENGTH_SHORT).show();
+                    showProgress(false);
                 }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                showProgress(false);
             }
         }
 
