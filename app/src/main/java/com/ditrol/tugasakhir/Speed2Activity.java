@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ditrol.tugasakhir.utils.FormatDate;
 import com.ditrol.tugasakhir.utils.JSONParser;
 
 import org.apache.http.NameValuePair;
@@ -38,6 +39,7 @@ public class Speed2Activity extends AppCompatActivity {
     String idMotor;
     Double[] speedValue = new Double[24];
     int[] average = new int[24];
+    int today, dayMin1, dayMin2, dayMin3, dayMin4,dayMin5,dayMin6; // 6 hari sebelumnya
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

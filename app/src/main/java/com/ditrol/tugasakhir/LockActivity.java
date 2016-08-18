@@ -33,7 +33,6 @@ public class LockActivity extends AppCompatActivity {
     String url_status = "http://drivercontrol.info/read_status.php";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_PRODUK = "produk";
-    public static final String TAG_STATUS = "status";
 
     private String statusMesin;
     @Override
@@ -63,6 +62,8 @@ public class LockActivity extends AppCompatActivity {
         });
 
     }
+
+
     class ReadStatusTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog pDialog;
