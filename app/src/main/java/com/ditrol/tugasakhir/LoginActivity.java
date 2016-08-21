@@ -238,14 +238,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            //UserLoginTask weatherTask = new UserLoginTask(email,password);
-            //weatherTask.execute("");
             LoginTask loginTask = new LoginTask(email,password);
             loginTask.execute("");
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
-            //showProgress(true);
         }
     }
 
@@ -373,7 +368,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private String[] getWeatherDataFromJson(String forecastJsonStr)
+        private String[] getDataFromJson(String forecastJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -386,9 +381,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final String EMAIL = "email";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray weatherArray = forecastJson.getJSONArray(USER_LIST);
-            int n = weatherArray.length();
-            for(int i = 0; i < weatherArray.length(); i++) {
+            JSONArray dataArray = forecastJson.getJSONArray(USER_LIST);
+            int n = dataArray.length();
+            for(int i = 0; i < dataArray.length(); i++) {
 
                 String db_id_user;
                 String db_username;
@@ -398,9 +393,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String db_plat_motor;
 
                 // Get the JSON object representing the day
-                JSONObject userData = weatherArray.getJSONObject(i);
+                JSONObject userData = dataArray.getJSONObject(i);
 
-                // description is in a child array called "weather", which is 1 element long.
+                // description is in a child array called "dataArray", which is 1 element long.
                 db_id_user = userData.getString(ID_USER);
                 db_username = userData.getString(USERNAME);
                 db_password = userData.getString(PASSWORD);
@@ -471,7 +466,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 URL url = new URL(builtUri.toString());
 
-                // Create the request to OpenWeatherMap, and open the connection
+                // Create the request to API, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -500,7 +495,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 forecastJsonStr = buffer.toString();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the data, there's no point in attemping
                 // to parse it.
                 return null;
             } finally {
@@ -517,7 +512,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             try {
-                return getWeatherDataFromJson(forecastJsonStr);
+                return getDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
@@ -577,7 +572,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private String getWeatherDataFromJson(String userJsonStr)
+        private String getDataFromJson(String userJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -591,7 +586,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Get the JSON object representing the day
             JSONObject userData = jsonObject;
 
-            // description is in a child array called "weather", which is 1 element long.
+            // description is in a child array called "userData", which is 1 element long.
 
             success = userData.getString(SUCCESS);
             message = userData.getString(MESSAGE);
@@ -603,8 +598,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String emailUser = mEmail;
                 String passwordUser = mPassword;
                 Log.v(LOG_TAG,"Email dan password valid. Login success. ");
-                UserLoginTask weatherTask = new UserLoginTask(emailUser, passwordUser);
-                weatherTask.execute("");
+                UserLoginTask loginTask = new UserLoginTask(emailUser, passwordUser);
+                loginTask.execute("");
             }else if(success.equalsIgnoreCase("2")){
                 emailDb = true;
                 Log.v(LOG_TAG,"Email ada di Db. Password salah. ");
@@ -656,7 +651,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 URL url = new URL(urlLogin.toString());
 
-                // Create the request to OpenWeatherMap, and open the connection
+                // Create the request to API, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -685,7 +680,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 forecastJsonStr = buffer.toString();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the data, there's no point in attemping
                 // to parse it.
                 return null;
             } finally {
@@ -702,7 +697,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             try {
-                return getWeatherDataFromJson(forecastJsonStr);
+                return getDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
