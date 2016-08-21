@@ -33,5 +33,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
 
 }

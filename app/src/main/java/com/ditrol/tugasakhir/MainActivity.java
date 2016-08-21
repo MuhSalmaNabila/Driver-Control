@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = null;
-                i = new Intent(MainActivity.this, Speed2Activity.class);
+                i = new Intent(MainActivity.this, SpeedActivity.class);
                 startActivity(i);
             }
         });
