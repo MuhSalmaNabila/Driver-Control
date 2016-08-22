@@ -24,9 +24,10 @@ import java.util.List;
 
 public class LockActivity extends AppCompatActivity {
 
-    private TextView statusMesinTV;
+    private TextView statusMesinTV,pertanyaanTV;
     private Button yesBut, noBut;
-    private LinearLayout kotakKonfirmasi;
+    private String  pertanyaanStr;
+    private LinearLayout kotakKonfirmasiLY;
 
     JSONParser jParser = new JSONParser();
     JSONArray lokasi = null;
@@ -41,9 +42,10 @@ public class LockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lock);
 
         statusMesinTV = (TextView) findViewById(R.id.status_hidup_motor);
+        pertanyaanTV = (TextView) findViewById(R.id.pertanyaan_status_motor);
         yesBut = (Button) findViewById(R.id.button_iya);
         noBut = (Button) findViewById(R.id.button_tidak);
-        kotakKonfirmasi = (LinearLayout) findViewById(R.id.kotak_konfirmasi);
+        kotakKonfirmasiLY = (LinearLayout) findViewById(R.id.kotak_konfirmasi);
 
         new ReadStatusTask().execute();
 
@@ -57,7 +59,7 @@ public class LockActivity extends AppCompatActivity {
         noBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kotakKonfirmasi.setVisibility(View.GONE);
+                kotakKonfirmasiLY.setVisibility(View.GONE);
             }
         });
 
@@ -97,9 +99,10 @@ public class LockActivity extends AppCompatActivity {
             }else{
                 if(statusMesin.equalsIgnoreCase("relayhidup")){
                     statusMesinTV.setText("Mesin Motor Hidup");
-                    kotakKonfirmasi.setVisibility(View.VISIBLE);
+                    pertanyaanTV.setText("Anda yakin akan mematikan mesin ?");
                 }else{
                     statusMesinTV.setText("Mesin Motor Mati");
+                    pertanyaanTV.setText("Anda yakin akan menghidupkan mesin ?");
                 }
             }
 
@@ -150,7 +153,11 @@ public class LockActivity extends AppCompatActivity {
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("status", "relaymati"));
+            if(statusMesin.equalsIgnoreCase("relaymati")){
+                params.add(new BasicNameValuePair("status", "relayhidup"));
+            }else if(statusMesin.equalsIgnoreCase("relayhidup")){
+                params.add(new BasicNameValuePair("status", "relaymati"));
+            }
 
             // check for success tag
             try {
@@ -178,16 +185,12 @@ public class LockActivity extends AppCompatActivity {
             dialog.dismiss();
             if (result.equalsIgnoreCase("fail")){
                 Toast.makeText(LockActivity.this, "Terjadi masalah! Silahkan cek koneksi Anda!", Toast.LENGTH_SHORT).show();
-                kotakKonfirmasi.setVisibility(View.VISIBLE);
             }
             else if (result.equalsIgnoreCase("gagal_koneksi_or_exception")){
                 Toast.makeText(LockActivity.this, "Terjadi masalah! Silahkan cek koneksi Anda!",  Toast.LENGTH_SHORT).show();
-                kotakKonfirmasi.setVisibility(View.VISIBLE);
             }
             else if (result.equalsIgnoreCase("OK")){
-                statusMesinTV.setText("Mesin Motor Mati");
-                kotakKonfirmasi.setVisibility(View.GONE);
-                Toast.makeText(LockActivity.this, "Berhasil mematikan mesin",  Toast.LENGTH_SHORT).show();
+                new ReadStatusTask().execute();
             }
         }
     }
