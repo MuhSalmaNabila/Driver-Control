@@ -23,7 +23,6 @@
         android:background="@color/colorPrimary"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:visibility="gone"
         android:layout_marginTop="50dp">
         <TextView
             android:id="@+id/pertanyaan_status_motor"
@@ -32,7 +31,6 @@
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
             android:padding="5dp"
-            android:text="Anda yakin ingin mematikan mesin ?"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:textSize="17sp" />
