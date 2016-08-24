@@ -7,6 +7,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -51,6 +52,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
+    public static final String FIREBASE_PREFS_NAME = "FirebaseToken";
 
     public ArrayAdapter<String> mForecastAdapter;
     String[] resultStrs = new String[1000];
@@ -69,17 +71,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -355,10 +346,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final String mToken;
 
-        UserLoginTask(String email, String password) {
+
+        UserLoginTask(String email, String password, String token) {
             mEmail = email;
             mPassword = password;
+            mToken = token;
         }
 
         /**
@@ -447,6 +441,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             int idUser = 7;
             String emailUser = mEmail;
             String passwordUser = mPassword;
+            String deviceToken = mToken;
 
             try {
                 // Construct the URL for the login query
@@ -454,10 +449,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         "http://drivercontrol.info/read_user.php";
                 String EMAIL_PARAM = "email";
                 String PASS_PARAM = "password";
+                String TOKEN_PARAM = "token";
 
                 Uri builtUriLogin = Uri.parse(BASE_URL).buildUpon()
                         .appendQueryParameter(EMAIL_PARAM, emailUser)
                         .appendQueryParameter(PASS_PARAM, passwordUser)
+                        .appendQueryParameter(TOKEN_PARAM, deviceToken)
                         .build();
 
                 URL builtUri = new URL(builtUriLogin.toString());
@@ -597,8 +594,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 passwordDb = true;
                 String emailUser = mEmail;
                 String passwordUser = mPassword;
+                String token = null;
+                SharedPreferences preferences = getSharedPreferences(FIREBASE_PREFS_NAME, MODE_PRIVATE);
+                String restoredText = preferences.getString("token", null);
+                if (restoredText != null){
+                    token = preferences.getString("token", "No name defined");
+                    Log.v(LOG_TAG,"Token pref ada: " + token);
+                }else{
+                    Log.v(LOG_TAG,"Token pref kosong: " + token);
+                }
                 Log.v(LOG_TAG,"Email dan password valid. Login success. ");
-                UserLoginTask loginTask = new UserLoginTask(emailUser, passwordUser);
+                UserLoginTask loginTask = new UserLoginTask(emailUser, passwordUser, token);
                 loginTask.execute("");
             }else if(success.equalsIgnoreCase("2")){
                 emailDb = true;
@@ -607,8 +613,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.v(LOG_TAG,"Email belum terdaftar. ");
             }
 
-            // Temperatures are in a child object called "temp".  Try not to name variables
-            // "temp" when working with temperature.  It confuses everybody.
             resultStrs2 = success + " - " + message;
             Log.v(LOG_TAG, "Hasil: "  + resultStrs2);
             return resultStrs2;

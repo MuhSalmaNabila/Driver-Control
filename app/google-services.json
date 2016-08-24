@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "513398917825",
+    "firebase_url": "https://liaproject-f27b7.firebaseio.com",
+    "project_id": "liaproject-f27b7",
+    "storage_bucket": "liaproject-f27b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513398917825:android:8fbe78f0749fdd84",
+        "android_client_info": {
+          "package_name": "com.ditrol.tugasakhir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513398917825-849mlsokeosdn1461vjpt71n32eu2v70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPwm99R5ewIFrAxjOIMEigE7R5m-McVNg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

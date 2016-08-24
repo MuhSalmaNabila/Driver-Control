@@ -44,6 +44,10 @@ public class SessionManagement {
     // Nomor Hp (make variable public to access from outside)
     public static final String KEY_NO_HP = "no_hp";
 
+    // Nomor Hp (make variable public to access from outside)
+    public static final String KEY_TOKEN = "token";
+
+
     // Constructor
     public SessionManagement(Context context){
         this._context = context;

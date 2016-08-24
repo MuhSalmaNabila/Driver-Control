@@ -1,19 +1,40 @@
 package com.ditrol.tugasakhir;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.ditrol.tugasakhir.utils.JSONParser;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     // Session Management Class
     SessionManagement session;
+    String sEmailUser, sIdDevice;
+    public static final String FIREBASE_PREFS_NAME = "FirebaseToken";
 
     // Disable back button
     @Override
@@ -28,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
+
+        // Session class instance
+        session = new SessionManagement(getApplicationContext());
+
+        HashMap<String, String> user = session.getUserDetails();
+        String emailUser = user.get(SessionManagement.KEY_EMAIL);
+        sEmailUser = emailUser;
 
         ImageButton buttonProfile = (ImageButton)findViewById(R.id.ibprofil);
         buttonProfile.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +104,73 @@ public class MainActivity extends AppCompatActivity {
         session.checkLogin();
 
     }
+
+    BroadcastReceiver tokenReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String token = intent.getStringExtra("token");
+            if(token != null){
+                sIdDevice = token;
+                sendRegistrationToServer();
+                Log.v("Token fcm", token + "");
+                SharedPreferences.Editor editor = getSharedPreferences(FIREBASE_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("token", sIdDevice);
+                editor.commit();
+
+            }
+        }
+    };
+
+    private void sendRegistrationToServer() {
+        // send the token to server
+        updateTokenTask ut = new updateTokenTask();
+        ut.execute();
+    }
+
+    class updateTokenTask extends AsyncTask<String, Void, String> {
+        ProgressDialog pDialog;
+        JSONParser jParser = new JSONParser();
+        JSONArray posts = null;
+
+        @Override
+        protected String doInBackground(String... sText) {
+            String returnResult = getSpeed();
+            return returnResult;
+
+        }
+
+        public String getSpeed() {
+            List<NameValuePair> parameter = new ArrayList<NameValuePair>();
+            parameter.add(new BasicNameValuePair("id_device", sIdDevice));
+            parameter.add(new BasicNameValuePair("email", sEmailUser));
+
+            try {
+                String url_all_posts = "http://drivercontrol.info/register_device.php";
+
+                JSONObject json = jParser.makeHttpRequest(url_all_posts, "POST", parameter);
+
+                int success = json.getInt("success");
+
+                if (success == 1) {
+                    return "OK";
+                } else {
+                    return "fail";
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception Caught";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+        }
+
+    }
+
     public void showPopupLogout(){
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
