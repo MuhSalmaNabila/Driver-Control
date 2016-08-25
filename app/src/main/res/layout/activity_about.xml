@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Aplikasi Driver Control sebagai sarana memonitor anak berkendara secara waktu-nyata merupakan penilitian Tugas Akhir yang memiliki fitur pelacak lokasi kendaraan, memberikan informasi kecepatan pengemudi, notifikasi ketika motor jatuh, dan fitur Lock untuk mematikan mesin motor. Penilitian ini dibuat oleh mahasiswa Sistem Komputer Universitas Diponegoro yaitu Lia Lidya Roza sebagai perancang aplikasi Android, dan Khoirunisa W. sebagai pembuat rancang bangun sistem embedded Driver Control."
+        android:text="Aplikasi Driver Control sebagai sarana memonitor anak berkendara secara waktu-nyata merupakan penilitian Tugas Akhir yang dibuat oleh Lia Lidya Roza. Aplikasi ini dapat digunakan apabila pengguna memiliki Alat Driver Control yang merupakan penilitian Tugas Akhir yang dibuat oleh Khoirunisa Waskitaningrum. Pembuat alat dan aplikasi Driver Control merupakan mahasiswi Sistem Komputer, Universitas Diponegoro angkatan 2012."
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

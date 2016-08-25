@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Aplikasi Driver Control sebagai sarana memonitor anak berkendara secara waktu-nyata terdiri dari lima fitur yaitu pelacak lokasi kendaraan pada menu Maps, memberikan informasi kecepatan pengemudi pada menu Speed, memberikan notifikasi ketika motor jatuh, menu Lock untuk mematikan mesin motor secara paksa dan fitur rekaman data saat mengemudi pada menu Data Record, untuk menggunakan aplikasi ini setiap pengguna yang mempunyai akun harus login terlebih dahulu. Pengguna juga dapat melakukan perubahan data akun melalui menu Profil."
+        android:text="Aplikasi Driver Control terdiri dari empat menu pada halaman utama yaitu Maps untuk melacak lokasi motor, Speed memberikan informasi kecepatan pengemudi, Lock untuk mematikan dan menghidupkan mesin motor secara otomatis, dan Profile untuk mengubah data profil dan kata sandi. Pada slidebar menu terdapat empat menu yaitu How to use untuk melihat Petunjuk aplikasi, Data record untuk melihat rekaman data pengemudi, About untuk melihat Tentang aplikasi, Logout untuk keluar aplikasi, dan aplikasi ini dilengkapi fitur notifikasi apabila motor jatuh."
         android:id="@+id/tVpetunjuk"
         android:textColor="@color/abc_input_method_navigation_guard"
         android:textAlignment="center"
