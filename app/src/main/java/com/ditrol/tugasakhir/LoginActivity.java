@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     String id_user;
     String username;
     String password;
-    String no_hp;
     String email;
     String plat_motor;
     Boolean mAuthTask;
@@ -370,7 +369,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final String ID_USER = "id";
             final String USERNAME = "username";
             final String PASSWORD = "password";
-            final String NO_HP = "no_hp";
             final String PLAT_MOTOR = "plat_motor";
             final String EMAIL = "email";
 
@@ -382,7 +380,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String db_id_user;
                 String db_username;
                 String db_password;
-                String db_no_hp;
                 String db_email;
                 String db_plat_motor;
 
@@ -393,7 +390,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 db_id_user = userData.getString(ID_USER);
                 db_username = userData.getString(USERNAME);
                 db_password = userData.getString(PASSWORD);
-                db_no_hp = userData.getString(NO_HP);
                 db_plat_motor = userData.getString(PLAT_MOTOR);
                 db_email = userData.getString(EMAIL).toLowerCase();
 
@@ -404,7 +400,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         id_user = db_id_user;
                         username = db_username;
                         password = db_password;
-                        no_hp = db_no_hp;
                         email = db_email;
                         plat_motor = db_plat_motor;
                     }else {
@@ -416,7 +411,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 // Temperatures are in a child object called "temp".  Try not to name variables
                 // "temp" when working with temperature.  It confuses everybody.
-                resultStrs[i] = db_username + " - " + db_password + " - " + db_no_hp + " - " + db_email;
+                resultStrs[i] = db_username + " - " + db_password + "  - " + db_email;
                 Log.v(LOG_TAG, "Hasil ke " + i + ": "  + resultStrs[i]);
             }
             return resultStrs;
@@ -526,7 +521,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (strings!=null) {
                 Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
-                session.createLoginSession(id_user, username, password, plat_motor, email, no_hp);
+                session.createLoginSession(id_user, username, password, plat_motor, email);
                 Intent i = null;
                 i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);

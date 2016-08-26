@@ -20,7 +20,6 @@ public class Register extends Activity {
         etPasswordreg = (EditText) findViewById(R.id.etPasswordreg);
         etPlatmotor = (EditText) findViewById(R.id.etPlatmotor);
         etEmail = (EditText) findViewById(R.id.etEmail);
-        etNohp = (EditText) findViewById(R.id.etNohp);
         bDaftar = (Button) findViewById (R.id.bDaftar);
 
         bDaftar.setOnClickListener(this);

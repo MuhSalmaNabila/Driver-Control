@@ -281,7 +281,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         String sUserName, sEmail, sPassword, sRePassword;
 
-        RegisterAccount(String email, String password, String nama_lengkap, String plat_motor, String no_hp) {
+        RegisterAccount(String email, String password, String nama_lengkap, String plat_motor) {
             mEmail = email;
             mPassword = password;
             mNamaLengkap = nama_lengkap;

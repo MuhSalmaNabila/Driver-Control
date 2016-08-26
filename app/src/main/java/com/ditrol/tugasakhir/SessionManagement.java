@@ -56,7 +56,7 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String id, String username, String password, String plat_motor, String email, String no_hp){
+    public void createLoginSession(String id, String username, String password, String plat_motor, String email){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
