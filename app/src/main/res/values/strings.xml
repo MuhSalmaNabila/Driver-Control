@@ -38,8 +38,8 @@
     <!-- string tambahan untuk register -->
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="no_plat_motor">No. Plat Motor</string>
-    <string name="no_hp">No. Handphone</string>
     <string name="action_next">Next</string>
+    <string name="action_ulang_password">Ulang Password</string>
     <string name="title_activity_map">Map</string>
 
     <!-- alert -->

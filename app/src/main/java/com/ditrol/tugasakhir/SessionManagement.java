@@ -41,10 +41,7 @@ public class SessionManagement {
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
-    // Nomor Hp (make variable public to access from outside)
-    public static final String KEY_NO_HP = "no_hp";
-
-    // Nomor Hp (make variable public to access from outside)
+    // Token (make variable public to access from outside)
     public static final String KEY_TOKEN = "token";
 
 
@@ -77,9 +74,6 @@ public class SessionManagement {
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
-
-        // Storing nomer hp in pref
-        editor.putString(KEY_NO_HP, no_hp);
 
         // commit changes
         editor.commit();
@@ -140,9 +134,6 @@ public class SessionManagement {
         // user email
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
 
-        // user nomor hp
-        user.put(KEY_NO_HP, pref.getString(KEY_NO_HP, null));
-
         // return user
         return user;
     }
@@ -174,4 +165,6 @@ public class SessionManagement {
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
     }
+
+
 }

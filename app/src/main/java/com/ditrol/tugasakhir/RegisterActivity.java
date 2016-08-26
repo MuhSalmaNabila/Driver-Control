@@ -59,9 +59,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mUlangPasswordView;
     private EditText mNamaLengkapView;
     private EditText mPlatMotor;
-    private EditText mNoHp;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -73,9 +73,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
+        mUlangPasswordView = (EditText) findViewById(R.id.password);
         mNamaLengkapView = (EditText) findViewById(R.id.nama_lengkap);
         mPlatMotor = (EditText) findViewById(R.id.no_plat_motor);
-        mNoHp = (EditText) findViewById(R.id.no_hp);
+
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -124,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         String password = mPasswordView.getText().toString();
         String nama_lengkap = mNamaLengkapView.getText().toString();
         String plat_motor = mPlatMotor.getText().toString();
-        String no_hp = mNoHp.getText().toString();
+        String ulang_password = mUlangPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -155,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new RegisterAccount(email, password, nama_lengkap, plat_motor, no_hp);
+            mAuthTask = new RegisterAccount(email, password, nama_lengkap, plat_motor);
             mAuthTask.execute("");
         }
     }
@@ -276,16 +277,16 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         private final String mPassword;
         private final String mNamaLengkap;
         private final String mPlatMotor;
-        private final String mNoHp;
+        private final String mUlangPassword;
 
-        String sUserName, sEmail, sPassword, sRePassword, sMobilePhone;
+        String sUserName, sEmail, sPassword, sRePassword;
 
         RegisterAccount(String email, String password, String nama_lengkap, String plat_motor, String no_hp) {
             mEmail = email;
             mPassword = password;
             mNamaLengkap = nama_lengkap;
             mPlatMotor = plat_motor;
-            mNoHp = no_hp;
+            mUlangPassword = password;
         }
 
         @Override
@@ -311,14 +312,14 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             String m_password = mPassword;
             String m_nama_lengkap = mNamaLengkap;
             String m_plat_motor = mPlatMotor;
-            String m_no_hp = mNoHp;
-            Log.v(LOG_TAG, "Cek data: " + "email: " + mEmail + " password: " + mPassword + " nama :" + mNamaLengkap + " plat: " + mPlatMotor + "hp: " + mNoHp);
+            String m_ulang_password = mUlangPassword;
+            Log.v(LOG_TAG, "Cek data: " + "email: " + mEmail + " password: " + mPassword + " nama :" + mNamaLengkap + " plat: " + mPlatMotor);
             List<NameValuePair> parameter = new ArrayList<NameValuePair>();
             parameter.add(new BasicNameValuePair("email", m_email));
             parameter.add(new BasicNameValuePair("password", m_password));
             parameter.add(new BasicNameValuePair("nama_lengkap", m_nama_lengkap));
             parameter.add(new BasicNameValuePair("plat_motor", m_plat_motor));
-            parameter.add(new BasicNameValuePair("no_hp", m_no_hp));
+            parameter.add(new BasicNameValuePair("ulang_password", m_ulang_password));
 
             try {
                 String url_all_posts = "http://drivercontrol.info/register_user.php" ;

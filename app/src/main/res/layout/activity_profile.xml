@@ -55,22 +55,6 @@
         android:id="@+id/etmail"
         android:layout_below="@+id/tvmail" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No Handphone"
-        android:id="@+id/tvnohp"
-        android:layout_below="@+id/etmail"
-        android:textSize="20sp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/etnohp"
-        android:layout_below="@+id/tvnohp"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/no_plat_motor"
+                    android:imeActionId="@+id/ulang_password"
                     android:imeActionLabel="@string/action_next"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
@@ -86,30 +86,31 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/no_plat_motor"
+                    android:id="@+id/ulang_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/no_plat_motor"
-                    android:imeActionId="@+id/no_hp"
-                    android:imeActionLabel="@string/action_next"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/no_plat_motor"
+                    android:imeActionLabel="@string/action_ulang_password"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="number"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
+
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/no_hp"
+                    android:id="@+id/no_plat_motor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/no_hp"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_register"
+                    android:hint="@string/no_plat_motor"
+                    android:imeActionId="@+id/no_hp"
+                    android:imeActionLabel="@string/action_next"
                     android:imeOptions="actionUnspecified"
                     android:inputType="number"
                     android:maxLines="1"
