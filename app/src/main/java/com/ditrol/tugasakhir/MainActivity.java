@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser != null){
+                if(sKodeUser == "0"){
                     Intent i = null;
                     i = new Intent(MainActivity.this, PetaActivity.class);
                     startActivity(i);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser != null){
+                if(sKodeUser == "0"){
                     Intent i = null;
                     i = new Intent(MainActivity.this, LockActivity.class);
                     startActivity(i);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser != null){
+                if(sKodeUser == "0"){
                     Intent i = null;
                     i = new Intent(MainActivity.this, SpeedActivity.class);
                     startActivity(i);

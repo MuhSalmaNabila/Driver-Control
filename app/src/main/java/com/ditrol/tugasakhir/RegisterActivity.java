@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -74,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
-        mUlangPasswordView = (EditText) findViewById(R.id.password);
+        mUlangPasswordView = (EditText) findViewById(R.id.ulang_password);
         mNamaLengkapView = (EditText) findViewById(R.id.nama_lengkap);
         mPlatMotor = (EditText) findViewById(R.id.no_plat_motor);
 
@@ -113,13 +112,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
@@ -128,8 +120,18 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         String plat_motor = mPlatMotor.getText().toString();
         String ulang_password = mUlangPasswordView.getText().toString();
 
-        Editable password1 = mPasswordView.getText();
-        Editable password2 = mUlangPasswordView.getText();
+        if (mAuthTask != null) {
+            return;
+        }
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+
+
+        String password1 = mPasswordView.getText().toString();
+        String password2 = mUlangPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -141,11 +143,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             cancel = true;
         }
 
-        if(password1 != password2){
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+        if (!password1.equals(password2)) {
+            mUlangPasswordView.setError("Password tidak sama");
+            focusView = mUlangPasswordView;
             cancel = true;
         }
+
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -316,8 +319,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             return returnResult;
         }
 
-        public String createAccount()
-        {
+        public String createAccount() {
             String m_email = mEmail;
             String m_password = mPassword;
             String m_nama_lengkap = mNamaLengkap;
@@ -328,22 +330,19 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             parameter.add(new BasicNameValuePair("email", m_email));
             parameter.add(new BasicNameValuePair("password", m_password));
             parameter.add(new BasicNameValuePair("nama_lengkap", m_nama_lengkap));
-            parameter.add(new BasicNameValuePair("kode_user", m_plat_motor));
-            parameter.add(new BasicNameValuePair("ulang_password", m_ulang_password));
+            parameter.add(new BasicNameValuePair("plat_motor", m_plat_motor));
 
             try {
-                String url_all_posts = "http://drivercontrol.info/register_user.php" ;
+                String url_all_posts = "http://drivercontrol.info/register_user.php";
 
-                JSONObject json = jParser.makeHttpRequest(url_all_posts,"POST", parameter);
+                JSONObject json = jParser.makeHttpRequest(url_all_posts, "POST", parameter);
 
                 int success = json.getInt("success");
                 if (success == 1) {
                     return "OK";
-                }
-                else if (success == 2){
+                } else if (success == 2) {
                     return "email registered";
-                }
-                else {
+                } else {
                     return "fail";
                 }
 
@@ -357,23 +356,15 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             pDialog.dismiss();
+            mAuthTask = null;
 
-            if(result.equalsIgnoreCase("Exception Caught"))
-            {
+            if (result.equalsIgnoreCase("Exception Caught")) {
                 Toast.makeText(RegisterActivity.this, "Erorr! Cek koneksi internet Anda", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            else if(result.equalsIgnoreCase("fail"))
-            {
+            } else if (result.equalsIgnoreCase("fail")) {
                 Toast.makeText(RegisterActivity.this, "Registrasi gagal, coba lagi!", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            else if(result.equalsIgnoreCase("email registered"))
-            {
+            } else if (result.equalsIgnoreCase("email registered")) {
                 Toast.makeText(RegisterActivity.this, "Pendaftaran Gagal! Email Anda telah terdaftar!", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            else {
+            } else {
                 //SUKSES
                 Toast.makeText(RegisterActivity.this, "Selamat pendaftaran berhasil dilakukan! Silahkan login menggunakan akun Anda", Toast.LENGTH_LONG).show();
                 // Launch login activity
