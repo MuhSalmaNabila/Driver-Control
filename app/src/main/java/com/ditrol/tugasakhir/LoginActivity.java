@@ -63,7 +63,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     String username;
     String password;
     String email;
-    String plat_motor;
+    String kode_user;
+    String status_login;
     Boolean mAuthTask;
 
     /**
@@ -369,8 +370,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final String ID_USER = "id";
             final String USERNAME = "username";
             final String PASSWORD = "password";
-            final String PLAT_MOTOR = "plat_motor";
+            final String KODE_USER = "kode_user";
             final String EMAIL = "email";
+            final String STATUS_LOGIN = "message";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray dataArray = forecastJson.getJSONArray(USER_LIST);
@@ -381,7 +383,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String db_username;
                 String db_password;
                 String db_email;
-                String db_plat_motor;
+                String db_kode_user;
+                String db_status_login;
 
                 // Get the JSON object representing the day
                 JSONObject userData = dataArray.getJSONObject(i);
@@ -390,8 +393,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 db_id_user = userData.getString(ID_USER);
                 db_username = userData.getString(USERNAME);
                 db_password = userData.getString(PASSWORD);
-                db_plat_motor = userData.getString(PLAT_MOTOR);
+                db_kode_user = userData.getString(KODE_USER);
                 db_email = userData.getString(EMAIL).toLowerCase();
+                db_status_login = userData.getString(STATUS_LOGIN);
 
                 if (emailDb){
                     Log.v(LOG_TAG,"Email ada di Db: " + db_email);
@@ -401,7 +405,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         username = db_username;
                         password = db_password;
                         email = db_email;
-                        plat_motor = db_plat_motor;
+                        kode_user = db_kode_user;
+                        status_login = db_status_login;
                     }else {
                         Log.v(LOG_TAG,"Password tidak ada di Db ");
                     }
@@ -520,12 +525,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (strings!=null) {
-                Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
-                session.createLoginSession(id_user, username, password, plat_motor, email);
-                Intent i = null;
-                i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if(status_login.equals("0")){
+                    Toast.makeText(LoginActivity.this, "Login anda belum diverifikasi. Silahkan cek email untuk melakukan verifikasi login dari perangkat ini.", Toast.LENGTH_LONG).show();
+                    showProgress(false);
+                }else if(status_login.equals("1")){
+                    Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
+                    session.createLoginSession(id_user, username, password, kode_user, email);
+                    Intent i = null;
+                    i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

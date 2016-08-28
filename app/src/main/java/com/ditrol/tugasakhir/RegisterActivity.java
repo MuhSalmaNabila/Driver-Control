@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -127,11 +128,20 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         String plat_motor = mPlatMotor.getText().toString();
         String ulang_password = mUlangPasswordView.getText().toString();
 
+        Editable password1 = mPasswordView.getText();
+        Editable password2 = mUlangPasswordView.getText();
+
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if(password1 != password2){
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -318,7 +328,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             parameter.add(new BasicNameValuePair("email", m_email));
             parameter.add(new BasicNameValuePair("password", m_password));
             parameter.add(new BasicNameValuePair("nama_lengkap", m_nama_lengkap));
-            parameter.add(new BasicNameValuePair("plat_motor", m_plat_motor));
+            parameter.add(new BasicNameValuePair("kode_user", m_plat_motor));
             parameter.add(new BasicNameValuePair("ulang_password", m_ulang_password));
 
             try {

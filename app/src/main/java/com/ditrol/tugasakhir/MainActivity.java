@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ditrol.tugasakhir.utils.JSONParser;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Session Management Class
     SessionManagement session;
-    String sEmailUser, sIdDevice;
+    String sEmailUser, sIdDevice, sKodeUser;
     public static final String FIREBASE_PREFS_NAME = "FirebaseToken";
 
     // Disable back button
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         String emailUser = user.get(SessionManagement.KEY_EMAIL);
         sEmailUser = emailUser;
+        String kodeUser = user.get(SessionManagement.KEY_KODE_USER);
+        sKodeUser = kodeUser;
 
         ImageButton buttonProfile = (ImageButton)findViewById(R.id.ibprofil);
         buttonProfile.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = null;
                 i = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(i);
+
             }
         });
 
@@ -73,9 +77,13 @@ public class MainActivity extends AppCompatActivity {
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = null;
-                i = new Intent(MainActivity.this, PetaActivity.class);
-                startActivity(i);
+                if(sKodeUser != null){
+                    Intent i = null;
+                    i = new Intent(MainActivity.this, PetaActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(MainActivity.this, "Silahkan isi kode user pada menu profil sebelum menggunakan layanan aplikasi", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -83,9 +91,13 @@ public class MainActivity extends AppCompatActivity {
         buttonLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = null;
-                i = new Intent(MainActivity.this, LockActivity.class);
-                startActivity(i);
+                if(sKodeUser != null){
+                    Intent i = null;
+                    i = new Intent(MainActivity.this, LockActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(MainActivity.this, "Silahkan isi kode user pada menu profil sebelum menggunakan layanan aplikasi", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -93,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
         buttonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = null;
-                i = new Intent(MainActivity.this, SpeedActivity.class);
-                startActivity(i);
+                if(sKodeUser != null){
+                    Intent i = null;
+                    i = new Intent(MainActivity.this, SpeedActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(MainActivity.this, "Silahkan isi kode user pada menu profil sebelum menggunakan layanan aplikasi", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

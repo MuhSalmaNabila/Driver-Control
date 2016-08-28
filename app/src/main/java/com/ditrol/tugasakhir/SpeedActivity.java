@@ -68,7 +68,7 @@ public class SpeedActivity extends AppCompatActivity {
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // no plat motor digunakan sebagai id
-        String userPlatMotor = user.get(SessionManagement.KEY_PLAT_MOTOR);
+        String userPlatMotor = user.get(SessionManagement.KEY_KODE_USER);
         idMotor = userPlatMotor;
 
         SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");

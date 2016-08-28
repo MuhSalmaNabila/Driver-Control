@@ -36,13 +36,10 @@ public class SessionManagement {
     public static final String KEY_PASSWORD = "password";
 
     // Plat motor(make variable public to access from outside)
-    public static final String KEY_PLAT_MOTOR = "plat_motor";
+    public static final String KEY_KODE_USER = "kode_user";
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
-
-    // Token (make variable public to access from outside)
-    public static final String KEY_TOKEN = "token";
 
 
     // Constructor
@@ -56,7 +53,7 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String id, String username, String password, String plat_motor, String email){
+    public void createLoginSession(String id, String username, String password, String kode_user, String email){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -70,7 +67,7 @@ public class SessionManagement {
         editor.putString(KEY_PASSWORD, password);
 
         // Storing plat motor in pref
-        editor.putString(KEY_PLAT_MOTOR, plat_motor);
+        editor.putString(KEY_KODE_USER, kode_user);
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
@@ -129,7 +126,7 @@ public class SessionManagement {
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
 
         // user plat motor
-        user.put(KEY_PLAT_MOTOR, pref.getString(KEY_PLAT_MOTOR, null));
+        user.put(KEY_KODE_USER, pref.getString(KEY_KODE_USER, null));
 
         // user email
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));

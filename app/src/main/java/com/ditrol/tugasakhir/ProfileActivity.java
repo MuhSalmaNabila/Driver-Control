@@ -31,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final String LOG_TAG = ProfileActivity.class.getSimpleName();
     // Session Management Class
     SessionManagement session;
-    String sId, sEmail, sNama, sPwd1, sPlatMotor;
+    String sId, sEmail, sNama, sPwd1, sKodeUser;
     EditText etUsername;
     EditText etPlatMotor;
     EditText etEmail;
@@ -52,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         String userName = user.get(SessionManagement.KEY_USERNAME);
         String userPass = user.get(SessionManagement.KEY_PASSWORD);
         sPwd1 = userPass;
-        String userPlatMotor = user.get(SessionManagement.KEY_PLAT_MOTOR);
+        String userPlatMotor = user.get(SessionManagement.KEY_KODE_USER);
         String userEmail = user.get(SessionManagement.KEY_EMAIL);
 
 
@@ -88,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         sNama = etUsername.getText().toString();
         sEmail = etEmail.getText().toString();
-        sPlatMotor = etPlatMotor.getText().toString();
+        sKodeUser = etPlatMotor.getText().toString();
 
 
         if (TextUtils.isEmpty(sNama)) {
@@ -105,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
             focusView = etEmail;
             cancel = true;
         }
-        if (TextUtils.isEmpty(sPlatMotor)) {
+        if (TextUtils.isEmpty(sKodeUser)) {
             etPlatMotor.setError(getString(R.string.error_field_required));
             focusView = etPlatMotor;
             cancel = true;
@@ -182,15 +182,15 @@ public class ProfileActivity extends AppCompatActivity {
             sEmail = email_user;
             String nama_user = etUsername.getText().toString();
             sNama = nama_user;
-            String plat_motor = etPlatMotor.getText().toString();
-            sPlatMotor = plat_motor;
+            String kode_user = etPlatMotor.getText().toString();
+            sKodeUser = kode_user;
 
 
             List<NameValuePair> parameter = new ArrayList<NameValuePair>();
             parameter.add(new BasicNameValuePair("id", id_user));
             parameter.add(new BasicNameValuePair("email", email_user));
             parameter.add(new BasicNameValuePair("username", nama_user));
-            parameter.add(new BasicNameValuePair("plat_motor", plat_motor));
+            parameter.add(new BasicNameValuePair("kode_user", kode_user));
 
             try {
                 // String url_all_posts = "http://api.vhiefa.net76.net/whatson/create_account.php" ;
@@ -206,7 +206,7 @@ public class ProfileActivity extends AppCompatActivity {
                 int success = json.getInt("success");
 
                 if (success == 1){
-                    session.createLoginSession(sId, sNama, sPwd1, sPlatMotor, sEmail);
+                    session.createLoginSession(sId, sNama, sPwd1, sKodeUser, sEmail);
                     return "OK";
                 }else if (success == 2){
                     return "email registered";
@@ -231,7 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
             }else {
                 //SUKSES
                 etUsername.setText(sNama);
-                etPlatMotor.setText(sPlatMotor);
+                etPlatMotor.setText(sKodeUser);
                 etEmail.setText(sEmail);
                 Toast.makeText(ProfileActivity.this, "Perubahan berhasil disimpan!", Toast.LENGTH_LONG).show();
 
