@@ -89,7 +89,7 @@
                     android:id="@+id/ulang_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/prompt_password1"
                     android:imeActionId="@+id/no_plat_motor"
                     android:imeActionLabel="@string/action_ulang_password"
                     android:imeOptions="actionUnspecified"
@@ -109,10 +109,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/no_plat_motor"
-                    android:imeActionId="@+id/no_hp"
+                    android:imeActionId="@+id/no_plat_motor"
                     android:imeActionLabel="@string/action_next"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="number"
+                    android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:singleLine="true" />
 

@@ -135,6 +135,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         boolean cancel = false;
         View focusView = null;
+        //username
+        if (TextUtils.isEmpty(nama_lengkap)) {
+            mNamaLengkapView.setError(getString(R.string.error_field_required));
+            focusView = mNamaLengkapView;
+            cancel = true;
+        }
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -149,7 +155,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             cancel = true;
         }
 
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -158,6 +163,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            cancel = true;
+        }
+
+        //plat motor
+        if (TextUtils.isEmpty(plat_motor)) {
+            mPlatMotor.setError(getString(R.string.error_field_required));
+            focusView = mPlatMotor;
             cancel = true;
         }
 

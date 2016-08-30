@@ -19,6 +19,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_password1">Ulangi Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Email tidak valid</string>
