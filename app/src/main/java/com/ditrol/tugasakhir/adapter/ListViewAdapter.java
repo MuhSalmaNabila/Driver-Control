@@ -15,9 +15,7 @@ import com.ditrol.tugasakhir.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by ADIK on 10/06/2016.
- */
+
 public class ListViewAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<String[]> data;

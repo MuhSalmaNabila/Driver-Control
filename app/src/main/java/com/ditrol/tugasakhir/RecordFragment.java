@@ -28,9 +28,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-/**
- * Created by ADIK on 02/08/2016.
- */
+
 public class RecordFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";

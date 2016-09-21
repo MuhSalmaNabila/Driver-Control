@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser == "0"){
+                if(sKodeUser.equals("10234")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, PetaActivity.class);
                     startActivity(i);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser == "0"){
+                if(sKodeUser.equals("10234")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, LockActivity.class);
                     startActivity(i);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser == "0"){
+                if(sKodeUser.equals("10234")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, SpeedActivity.class);
                     startActivity(i);
@@ -229,9 +229,14 @@ public class MainActivity extends AppCompatActivity {
             i = new Intent(MainActivity.this, HowtouseActivity.class);
             startActivity(i);
         }else if(id == R.id.action_record){
-            Intent i = null;
-            i = new Intent(MainActivity.this, RecordNewActivity.class);
-            startActivity(i);
+            if(sKodeUser.equals("10234")){
+                Intent i = null;
+                i = new Intent(MainActivity.this, RecordNewActivity.class);
+                startActivity(i);
+            }else {
+                Toast.makeText(MainActivity.this, "Silahkan isi kode user pada menu profil sebelum menggunakan layanan aplikasi", Toast.LENGTH_SHORT).show();
+            }
+
         }else if(id == R.id.action_about){
             Intent i = null;
             i = new Intent(MainActivity.this, AboutActivity.class);

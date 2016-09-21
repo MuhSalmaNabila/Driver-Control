@@ -7,20 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ebc076"
+    android:background="@drawable/petunjuk"
     tools:context="com.ditrol.tugasakhir.HowtouseActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Aplikasi Driver Control terdiri dari empat menu pada halaman utama yaitu Maps untuk melacak lokasi motor, Speed memberikan informasi kecepatan pengemudi, Lock untuk mematikan dan menghidupkan mesin motor secara otomatis, dan Profile untuk mengubah data profil dan kata sandi. Pada slidebar menu terdapat empat menu yaitu How to use untuk melihat Petunjuk aplikasi, Data record untuk melihat rekaman data pengemudi, About untuk melihat Tentang aplikasi, Logout untuk keluar aplikasi, dan aplikasi ini dilengkapi fitur notifikasi apabila motor jatuh."
-        android:id="@+id/tVpetunjuk"
-        android:textColor="@color/abc_input_method_navigation_guard"
-        android:textAlignment="center"
-        android:textSize="22dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>

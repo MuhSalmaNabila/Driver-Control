@@ -33,7 +33,7 @@ public class LockActivity extends AppCompatActivity {
     JSONArray lokasi = null;
     String url_status = "http://drivercontrol.info/read_status.php";
     public static final String TAG_SUCCESS = "success";
-    public static final String TAG_PRODUK = "produk";
+    public static final String TAG_STATUS = "status";
 
     private String statusMesin;
     @Override
@@ -118,7 +118,7 @@ public class LockActivity extends AppCompatActivity {
 
                 int success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    lokasi = json.getJSONArray(TAG_PRODUK);
+                    lokasi = json.getJSONArray(TAG_STATUS);
                     for (int i = 0; i < lokasi.length() ; i++){
                         JSONObject c = lokasi.getJSONObject(i);
                         statusMesin = c.getString("status_relay");

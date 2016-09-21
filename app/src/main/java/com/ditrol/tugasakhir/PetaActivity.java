@@ -44,7 +44,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
     JSONArray lokasi = null;
     String url_lokasi = "http://drivercontrol.info/read_location.php";
     public static final String TAG_SUCCESS = "success";
-    public static final String TAG_LOKASI = "produk";
+    public static final String TAG_PRODUK = "produk";
     public static final String TAG_LATITUDE = "latitude";
     public static final String TAG_LONGITUDE = "longitude";
 
@@ -160,7 +160,7 @@ public class PetaActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 int success = json.getInt(TAG_SUCCESS);
                 Log.v("succes",""+TAG_SUCCESS);
                 if (success == 1) {
-                    lokasi = json.getJSONArray(TAG_LOKASI);
+                    lokasi = json.getJSONArray(TAG_PRODUK);
                     for (int i = 0; i < lokasi.length() ; i++){
                         JSONObject c = lokasi.getJSONObject(i);
                         latitudeStr = c.getString(TAG_LATITUDE);
