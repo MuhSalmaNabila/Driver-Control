@@ -9,6 +9,7 @@
     -->
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -63,6 +64,7 @@
         </activity>
         <activity
             android:name=".AboutActivity"
+            android:screenOrientation="portrait"
             android:label="@string/about">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -70,6 +72,7 @@
         </activity>
         <activity
             android:name=".HowtouseActivity"
+            android:screenOrientation="portrait"
             android:label="@string/howtouse">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -138,8 +141,7 @@
 
         <activity
             android:name=".PetaActivity"
-            android:label="@string/title_activity_peta">
-        </activity>
+            android:label="@string/title_activity_peta"></activity>
         <activity
             android:name=".UbahPasswordActivity"
             android:label="@string/ubah_password">
@@ -156,21 +158,18 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <service
-            android:name=".services.MyFirebaseMessagingService">
+        <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".services.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service
-            android:name=".services.MyFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
-
+        <activity android:name=".AdminActivity"></activity>
     </application>
 
 </manifest>

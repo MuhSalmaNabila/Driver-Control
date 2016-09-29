@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
         String kodeUser = user.get(SessionManagement.KEY_KODE_USER);
         sKodeUser = kodeUser;
 
+        if(sEmailUser.equalsIgnoreCase("drivercontrol123@gmail.com")){
+            Intent i = null;
+            i = new Intent(MainActivity.this, AdminActivity.class);
+            startActivity(i);
+            finish();
+        }
+
         ImageButton buttonProfile = (ImageButton)findViewById(R.id.ibprofil);
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override

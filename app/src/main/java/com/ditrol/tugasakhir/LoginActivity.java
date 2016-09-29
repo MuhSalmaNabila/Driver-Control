@@ -532,7 +532,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(LoginActivity.this, "Anda berhasil login!", Toast.LENGTH_SHORT).show();
                     session.createLoginSession(id_user, username, password, kode_user, email);
                     Intent i = null;
-                    i = new Intent(LoginActivity.this, MainActivity.class);
+                    if(email.equalsIgnoreCase("drivercontrol123@gmail.com")){
+                        i = new Intent(LoginActivity.this, AdminActivity.class);
+                    }else{
+                        i = new Intent(LoginActivity.this, MainActivity.class);
+                    }
                     startActivity(i);
                     finish();
                 }

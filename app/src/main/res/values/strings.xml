@@ -50,7 +50,8 @@
     <!-- strings untuk ubah password -->
     <string name="ubah_password">Ubah Password</string>
     <string name="alert_ubah_password">Apakah Anda yakin ingin mengganti password?</string>
-    <string name="alert_logout">Apakah Anda yakin ingin keluar??</string>
+    <string name="alert_logout">Apakah Anda yakin ingin keluar?</string>
+    <string name="alert_confirmation">Apakah Anda yakin ingin merubah status alat?</string>
     <string name="title_activity_record_new">Rekaman data</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
