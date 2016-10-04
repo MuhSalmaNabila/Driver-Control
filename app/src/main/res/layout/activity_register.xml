@@ -115,7 +115,23 @@
                     android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/kode_alat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/kode_alatt"
+                    android:imeActionId="@+id/kode_alatt"
+                    android:imeActionLabel="@string/kode_alatt"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textAutoComplete"
+                    android:maxLines="1"
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <Button

@@ -33,7 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
     SessionManagement session;
     String sId, sEmail, sNama, sPwd1, sKodeUser;
     EditText etUsername;
-    EditText etPlatMotor;
+    EditText etKodeUser;
     EditText etEmail;
     Button bUbahPassword;
 
@@ -52,15 +52,15 @@ public class ProfileActivity extends AppCompatActivity {
         String userName = user.get(SessionManagement.KEY_USERNAME);
         String userPass = user.get(SessionManagement.KEY_PASSWORD);
         sPwd1 = userPass;
-        String userPlatMotor = user.get(SessionManagement.KEY_KODE_USER);
+        String userKodeUser = user.get(SessionManagement.KEY_KODE_USER);
         String userEmail = user.get(SessionManagement.KEY_EMAIL);
 
 
         etUsername = (EditText)findViewById(R.id.etusername);
         etUsername.setText(userName);
 
-        etPlatMotor = (EditText)findViewById(R.id.etplat);
-        etPlatMotor.setText(userPlatMotor);
+        etKodeUser = (EditText)findViewById(R.id.etkode);
+        etKodeUser.setText(userKodeUser);
 
         etEmail = (EditText)findViewById(R.id.etmail);
         etEmail.setText(userEmail);
@@ -84,11 +84,11 @@ public class ProfileActivity extends AppCompatActivity {
         Boolean cancel = false;
         etUsername.setError(null);
         etEmail.setError(null);
-        etPlatMotor.setError(null);
+        etKodeUser.setError(null);
 
         sNama = etUsername.getText().toString();
         sEmail = etEmail.getText().toString();
-        sKodeUser = etPlatMotor.getText().toString();
+        sKodeUser = etKodeUser.getText().toString();
 
 
         if (TextUtils.isEmpty(sNama)) {
@@ -106,8 +106,8 @@ public class ProfileActivity extends AppCompatActivity {
             cancel = true;
         }
         if (TextUtils.isEmpty(sKodeUser)) {
-            etPlatMotor.setError(getString(R.string.error_field_required));
-            focusView = etPlatMotor;
+            etKodeUser.setError(getString(R.string.error_field_required));
+            focusView = etKodeUser;
             cancel = true;
         }
         if (cancel) {
@@ -182,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
             sEmail = email_user;
             String nama_user = etUsername.getText().toString();
             sNama = nama_user;
-            String kode_user = etPlatMotor.getText().toString();
+            String kode_user = etKodeUser.getText().toString();
             sKodeUser = kode_user;
 
 
@@ -231,7 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
             }else {
                 //SUKSES
                 etUsername.setText(sNama);
-                etPlatMotor.setText(sKodeUser);
+                etKodeUser.setText(sKodeUser);
                 etEmail.setText(sEmail);
                 Toast.makeText(ProfileActivity.this, "Perubahan berhasil disimpan!", Toast.LENGTH_LONG).show();
 

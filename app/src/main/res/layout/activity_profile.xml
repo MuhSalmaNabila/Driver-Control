@@ -29,15 +29,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Kode User"
-        android:id="@+id/tvplatmotor"
+        android:id="@+id/tvkodeuser"
         android:layout_below="@+id/editText"
         android:textSize="20sp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etplat"
-        android:layout_below="@+id/tvplatmotor" />
+        android:id="@+id/etkode"
+        android:layout_below="@+id/tvkodeuser" />
 
     <TextView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:text="Email"
         android:id="@+id/tvmail"
         android:textSize="20sp"
-        android:layout_below="@+id/etplat" />
+        android:layout_below="@+id/etkode" />
 
     <EditText
         android:layout_width="match_parent"

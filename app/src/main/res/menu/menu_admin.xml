@@ -10,12 +10,6 @@
         <menu>
 
             <item
-                android:id="@+id/action_howtouse"
-                android:orderInCategory="100"
-                android:icon="@drawable/htu"
-                android:title="How to use"
-                app:showAsAction="always" />
-            <item
                 android:id="@+id/action_about"
                 android:orderInCategory="100"
                 android:icon="@drawable/about"

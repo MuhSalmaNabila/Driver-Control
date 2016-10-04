@@ -109,11 +109,7 @@ public class AdminActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_howtouse){
-            Intent i = null;
-            i = new Intent(AdminActivity.this, HowtouseActivity.class);
-            startActivity(i);
-        }else if(id == R.id.action_about){
+        if(id == R.id.action_about){
             Intent i = null;
             i = new Intent(AdminActivity.this, AboutActivity.class);
             startActivity(i);
@@ -173,7 +169,7 @@ public class AdminActivity extends AppCompatActivity {
 
         public String getStatusAlat()
         {
-            String kode_alat = "10234";
+            String kode_alat = "b46c93ky";
 
             List<NameValuePair> parameter = new ArrayList<NameValuePair>();
             parameter.add(new BasicNameValuePair("kode_alat", kode_alat));
@@ -217,7 +213,7 @@ public class AdminActivity extends AppCompatActivity {
                 refreshData.setVisibility(View.VISIBLE);
             }else if(result.equalsIgnoreCase("1")){
                 //SUKSES
-                sKodeAlat = "10234";
+                sKodeAlat = "b46c93ky";
                 sStatusAlat = "Aktif";
                 sEditStatus = "Nonaktifkan";
 
@@ -229,14 +225,14 @@ public class AdminActivity extends AppCompatActivity {
                 editStatus.setVisibility(View.VISIBLE);
 
             }else if(result.equalsIgnoreCase("0")){
-                sKodeAlat = "10234";
+                sKodeAlat = "b46c93ky";
                 sStatusAlat = "Tidak Aktif";
                 sEditStatus = "Aktifkan";
 
                 kodeAlat.setText(sKodeAlat);
                 statusAlat.setText(sStatusAlat);
                 editStatus.setText(sEditStatus);
-                Toast.makeText(AdminActivity.this, "Data alat berhasil ditampilkan", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminActivity.this, "Data alat berhasil dinonaktifkan", Toast.LENGTH_LONG).show();
                 refreshData.setVisibility(View.GONE);
                 editStatus.setVisibility(View.VISIBLE);
 
@@ -268,7 +264,7 @@ public class AdminActivity extends AppCompatActivity {
 
         public String updateStatusAlat()
         {
-            String kode_alat = "10234";
+            String kode_alat = "b46c93ky";
             String status_alat = "";
 
             if(statusAlat.getText().toString().equalsIgnoreCase("Aktif")){

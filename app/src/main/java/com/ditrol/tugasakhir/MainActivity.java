@@ -62,13 +62,16 @@ public class MainActivity extends AppCompatActivity {
         String kodeUser = user.get(SessionManagement.KEY_KODE_USER);
         sKodeUser = kodeUser;
 
+      try{
         if(sEmailUser.equalsIgnoreCase("drivercontrol123@gmail.com")){
             Intent i = null;
             i = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(i);
             finish();
         }
+      }catch(Exception e){
 
+      }
         ImageButton buttonProfile = (ImageButton)findViewById(R.id.ibprofil);
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser.equals("10234")){
+                if(sKodeUser.equals("vp1842na")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, PetaActivity.class);
                     startActivity(i);
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser.equals("10234")){
+                if(sKodeUser.equals("vp1842na")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, LockActivity.class);
                     startActivity(i);
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sKodeUser.equals("10234")){
+                if(sKodeUser.equals("vp1842na")){
                     Intent i = null;
                     i = new Intent(MainActivity.this, SpeedActivity.class);
                     startActivity(i);
@@ -236,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
             i = new Intent(MainActivity.this, HowtouseActivity.class);
             startActivity(i);
         }else if(id == R.id.action_record){
-            if(sKodeUser.equals("10234")){
+            if(sKodeUser.equals("vp1842na")){
                 Intent i = null;
                 i = new Intent(MainActivity.this, RecordNewActivity.class);
                 startActivity(i);
